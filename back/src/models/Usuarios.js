@@ -20,6 +20,16 @@ const Usuario = sequelize.define("Usuario", {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+
+  rol: {
+    type: DataTypes.STRING,
+    defaultValue: 'admin'
+  },
+  
+  activo: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
   }
 
 });
