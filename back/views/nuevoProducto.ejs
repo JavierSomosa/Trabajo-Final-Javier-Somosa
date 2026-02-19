@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Producto</title>
+</head>
+<body>
+    <h2>Crear Producto</h2>
+    <form action="/admin/productos" method="POST" enctype="multipart/form-data">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required><br><br>
+
+        <label>Precio:</label>
+        <input type="number" step="0.01" name="precio" required><br><br>
+
+        <label>Tipo:</label>
+        <input type="text" name="tipo" required><br><br>
+
+        <label>Imagen:</label>
+        <input type="file" name="imagen" accept="image/*">
+
+        <label>Activo:</label>
+        <input type="checkbox" name="activo" value="true" checked>
+        <br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <br>
+    <a href="/admin/dashboard">Volver</a>
+</body>
+</html>

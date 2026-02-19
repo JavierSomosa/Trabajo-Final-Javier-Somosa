@@ -22,6 +22,14 @@
             </div>
 
             <button type="submit">Ingresar</button>
+            <button type="button" onclick="autocompletar()">Acceso rápido</button>
         </form>
+        
+        <script>
+        function autocompletar() {
+            document.querySelector('input[name="email"]').value = "admin@mail.com";
+            document.querySelector('input[name="password"]').value = "1234";
+        }
+        </script>
     </body>
 </html>

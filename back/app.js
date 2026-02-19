@@ -10,6 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //motor de vistas
 app.set("view engine", "ejs");
+//para las imagenes
+app.use(express.static("public"));
 
 app.use(session({
   secret: "super_secreto_tp",
@@ -27,7 +29,7 @@ app.use("/api/usuarios", usuariosRoutes);
 app.use("/admin", adminRoutes);
 
 // Sincronizar BD
-sequelize.sync({ alter: true })
+sequelize.sync({ force: true })
   .then(() => console.log("🟢 BD sincronizada"))
   .catch(err => console.error(err));
 

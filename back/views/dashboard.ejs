@@ -6,6 +6,49 @@
 <body>
     <h2>Bienvenido al Dashboard</h2>
     <p>Estás logueado.</p>
+    <a href="/admin/productos/nuevo">
+    <button>Crear Producto</button>
+    </a>
+    <h2>Lista de Productos</h2>
+
+<table border="1" cellpadding="7">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Tipo</th>
+            <th>Imagen</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% productos.forEach(producto => { %>
+            <tr>
+                <td><%= producto.nombre %></td>
+                <td>$ <%= producto.precio %></td>
+                <td><%= producto.tipo %></td>
+                <td>
+                    <% if (producto.imagen) { %>
+                        <img src="/uploads/<%= producto.imagen %>" width="80">
+                    <% } %>
+                </td>
+                <td>
+                    <% if (producto.activo) { %>
+                        Activo
+                    <% } else { %>
+                        Inactivo
+                    <% } %>
+                </td>
+                <td>
+                    <a href="/admin/productos/<%= producto.id %>/editar">
+                        <button>Editar</button>
+                    </a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
 </body>
 <footer>
     <a href="/admin/logout">Cerrar sesión</a>
