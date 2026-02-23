@@ -3,7 +3,7 @@ const router = express.Router();
 const { Producto } = require("../models");
 
 // Importamos las funciones del controller
-const { crearProducto, obtenerProductos, editarProducto, desactivarProducto, activarProducto } = require("../controllers/producto.controller");
+const { crearProducto, obtenerProductos, editarProducto, desactivarProducto, activarProducto, eliminarProducto } = require("../controllers/producto.controller");
 
 // GET /api/productos → obtener todos los productos
 router.get("/", obtenerProductos);
@@ -17,5 +17,7 @@ router.put("/:id/editar", editarProducto);
 router.put("/:id/desactivar", desactivarProducto);
 
 router.put("/:id/activar", activarProducto);
+
+router.put("/:id/eliminar", eliminarProducto);
 
 module.exports = router;

@@ -16,7 +16,7 @@
         <tr>
             <th>Nombre</th>
             <th>Precio</th>
-            <th>Tipo</th>
+            <th>Categoria</th>
             <th>Imagen</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -27,7 +27,7 @@
             <tr>
                 <td><%= producto.nombre %></td>
                 <td>$ <%= producto.precio %></td>
-                <td><%= producto.tipo %></td>
+                <td><%= producto.categoria %></td>
                 <td>
                     <% if (producto.imagen) { %>
                         <img src="/uploads/<%= producto.imagen %>" width="80">
@@ -44,6 +44,12 @@
                     <a href="/admin/productos/<%= producto.id %>/editar">
                         <button>Editar</button>
                     </a>
+                    <form action="/admin/productos/<%= producto.id %>/eliminar"
+                        method="POST"
+                        onsubmit="return confirmarEliminacion();"
+                        style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         <% }) %>

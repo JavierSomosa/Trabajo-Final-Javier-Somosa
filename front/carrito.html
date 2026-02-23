@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Zona Gamer - Carrito</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+button {
+    padding: 5px 8px;
+    margin-left: 5px;
+}
+
+.dark {
+    background: #121212;
+    color: white;
+}
+
+.dark button {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+.theme-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<button class="theme-btn" onclick="toggleTheme()">Cambiar tema</button>
+
+<h1>🛒 Carrito</h1>
+
+<div id="carrito"></div>
+<h3 id="total"></h3>
+
+<button onclick="finalizar()">Finalizar compra</button>
+<a href="productos.html">Volver</a>
+
+<script>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+function render() {
+    const contenedor = document.getElementById("carrito");
+    contenedor.innerHTML = "";
+    let total = 0;
+
+    carrito.forEach(p => {
+        total += p.precio * p.cantidad;
+
+        contenedor.innerHTML += `
+            <div class="item">
+                ${p.nombre} x${p.cantidad}
+                <button onclick="sumar(${p.id})">+</button>
+                <button onclick="restar(${p.id})">-</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = "Total: $" + total;
+}
+
+function sumar(id) {
+    carrito.find(p => p.id === id).cantidad++;
+    guardar();
+}
+
+function restar(id) {
+    const prod = carrito.find(p => p.id === id);
+    prod.cantidad--;
+    if (prod.cantidad <= 0)
+        carrito = carrito.filter(p => p.id !== id);
+    guardar();
+}
+
+function guardar() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    render();
+}
+
+async function finalizar() {
+    if (carrito.length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
+
+    if (!confirm("¿Confirmar compra?")) return;
+
+    const nombre = localStorage.getItem("nombreUsuario");
+
+    const res = await fetch("http://localhost:3000/api/ventas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, productos: carrito })
+    });
+
+    const data = await res.json();
+
+    localStorage.removeItem("carrito");
+    localStorage.setItem("ticket", JSON.stringify(data));
+    window.location.href = "ticket.html";
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("tema",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+
+window.onload = function () {
+    if (localStorage.getItem("tema") === "dark") {
+        document.body.classList.add("dark");
+    }
+    render();
+};
+</script>
+
+</body>
+</html>

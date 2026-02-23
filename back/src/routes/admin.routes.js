@@ -8,7 +8,7 @@ router.get("/login", (req, res) => {
     res.render("login", { error: null});
 });
 
-const { mostrarDashboard, cargarProductoVista, mostrarEditarProductoVista, actualizarProductosVista} = require("../controllers/admin.controller");
+const { mostrarDashboard, cargarProductoVista, mostrarEditarProductoVista, actualizarProductosVista, eliminarProductoVista} = require("../controllers/admin.controller");
 const{ verificarSesion } = require("../middlewares/auth.middleware.js")
 const{ autentificarUsuario } = require("../controllers/auth.controller.js")
 
@@ -27,6 +27,8 @@ router.get("/productos/:id/editar", verificarSesion, mostrarEditarProductoVista)
 //para enviar el formulario de edicion
 router.post("/productos/:id/editar", verificarSesion, upload.single("imagen"), actualizarProductosVista);
 
+router.post("/productos/:id/eliminar", verificarSesion, eliminarProductoVista);
+
 router.get("/logout", (req, res) =>{
     req.session.destroy((error) => {
     if (error) {
@@ -38,5 +40,6 @@ router.get("/logout", (req, res) =>{
 })
 
 router.post("/login", autentificarUsuario);
+
 
 module.exports = router;

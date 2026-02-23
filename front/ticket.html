@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Zona Gamer - Ticket</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    padding: 20px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.dark {
+    background: #121212;
+    color: white;
+}
+
+.theme-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<button class="theme-btn" onclick="toggleTheme()">Cambiar tema</button>
+
+<h1>🎮 Zona Gamer</h1>
+<h2>Ticket de Compra</h2>
+
+<div id="ticket"></div>
+
+<button onclick="window.print()">Descargar PDF</button>
+<br><br>
+<button onclick="salir()">Salir</button>
+
+<script>
+function cargarTicket() {
+    const data = JSON.parse(localStorage.getItem("ticket"));
+    const contenedor = document.getElementById("ticket");
+
+    if (!data) {
+        contenedor.innerHTML = "No hay ticket disponible.";
+        return;
+    }
+
+    let html = `<p><strong>Cliente:</strong> ${data.nombre}</p>`;
+    html += `<p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>`;
+    html += "<ul>";
+
+    data.productos.forEach(p => {
+        html += `<li>${p.nombre} x${p.cantidad}</li>`;
+    });
+
+    html += "</ul>";
+    html += `<p><strong>Total:</strong> $${data.total}</p>`;
+
+    contenedor.innerHTML = html;
+}
+
+function salir() {
+    localStorage.removeItem("ticket");
+    localStorage.removeItem("nombreUsuario");
+    window.location.href = "index.html";
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("tema",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+
+window.onload = function () {
+    if (localStorage.getItem("tema") === "dark") {
+        document.body.classList.add("dark");
+    }
+    cargarTicket();
+};
+</script>
+
+</body>
+</html>

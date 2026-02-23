@@ -14,9 +14,9 @@ const mostrarDashboard = async(req, res) =>{
 
 const cargarProductoVista = async(req, res) =>{
     try{
-        const { nombre, precio, tipo, activo} = req.body;
+        const { nombre, precio, categoria, activo} = req.body;
 
-        if (!nombre || !precio || !tipo) {
+        if (!nombre || !precio || !categoria) {
             return res.render("nuevoProducto", {
                 error: "Datos incompletos"
             });
@@ -25,7 +25,7 @@ const cargarProductoVista = async(req, res) =>{
         await Producto.create({
             nombre,
             precio,
-            tipo,
+            categoria,
             imagen: req.file ? req.file.filename : null,
             activo
         });
@@ -66,27 +66,51 @@ const actualizarProductosVista = async(req, res) =>{
         return res.redirect("/admin/dashboard");
         }
 
-        const { nombre, precio, tipo } = req.body;
+        const { nombre, precio, categoria } = req.body;
 
         const activo = req.body.activo ? true : false;
 
         await producto.update({
             nombre,
             precio,
-            tipo,
+            categoria,
             imagen: req.file ? req.file.filename : producto.imagen,
             activo
         });
 
         res.redirect("/admin/dashboard");
     }catch(error){
-        
+        console.error(error);
+        res.redirect("/admin/dashboard");
     }
 }
+
+const eliminarProductoVista = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const producto = await Producto.findByPk(id);
+
+        if (!producto) {
+            return res.redirect("/admin/dashboard");
+        }
+
+        await producto.update({
+            activo: false
+        });
+
+        res.redirect("/admin/dashboard");
+
+    } catch (error) {
+        console.error(error);
+        res.redirect("/admin/dashboard");
+    }
+};
 
 module.exports= {
     mostrarDashboard,
     cargarProductoVista,
     mostrarEditarProductoVista,
-    actualizarProductosVista
+    actualizarProductosVista,
+    eliminarProductoVista
 }

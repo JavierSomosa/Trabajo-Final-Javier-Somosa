@@ -3,19 +3,15 @@ const sequelize = require("../config/database");
 const Producto = require("./Producto");
 const Venta = require("./Venta");
 const Usuario = require("./Usuarios");
+const VentaProducto = require("./ventaProducto");
 
-// Relación muchos a muchos entre Venta y Producto
-    //Una venta tiene muchos productos
-        //|
 Venta.belongsToMany(Producto, {
-  through: "ventas_productos",
+  through: VentaProducto,
   foreignKey: "venta_id"
 });
 
 Producto.belongsToMany(Venta, {
-//Sequelize crea la tabla intermedia
-  through: "ventas_productos",
-//Claves foráneas
+  through: VentaProducto,
   foreignKey: "producto_id"
 });
 

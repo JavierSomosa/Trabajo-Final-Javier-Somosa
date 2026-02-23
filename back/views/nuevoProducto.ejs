@@ -14,11 +14,18 @@
         <label>Precio:</label>
         <input type="number" step="0.01" name="precio" required><br><br>
 
-        <label>Tipo:</label>
-        <input type="text" name="tipo" required><br><br>
+        <label>Categoria:</label>
+        <select name="categoria" required>
+            <option value="">Seleccione una categoría</option>
+            <option value="juego">Juego</option>
+            <option value="pelicula">Película</option>
+        </select>
+        <br><br>
 
         <label>Imagen:</label>
         <input type="file" name="imagen" accept="image/*">
+        <br><br>
+        
 
         <label>Activo:</label>
         <input type="checkbox" name="activo" value="true" checked>

@@ -20,9 +20,9 @@ const Producto = sequelize.define("Producto", {
     allowNull: false
   },
 
-  // Tipo de producto: juego o pelicula
-  tipo: {
-    type: DataTypes.STRING,
+  // categoria de producto: juego o pelicula
+  categoria: {
+    type: DataTypes.ENUM("Juego", "Película"),
     allowNull: false
   },
 
