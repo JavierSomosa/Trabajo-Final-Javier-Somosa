@@ -1,1 +1,1 @@
-Ahora estoy creando el dashboard del admin y su login.
+Cree validaciones en middleware para que no pase directo al controller y se creen capas de validaciones.
