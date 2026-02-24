@@ -14,13 +14,15 @@ const mostrarDashboard = async(req, res) =>{
 
 const cargarProductoVista = async(req, res) =>{
     try{
-        const { nombre, precio, categoria, activo} = req.body;
+        const { nombre, precio, categoria} = req.body;
 
         if (!nombre || !precio || !categoria) {
             return res.render("nuevoProducto", {
                 error: "Datos incompletos"
             });
         }
+
+        const activo = req.body.activo ? true : false;
 
         await Producto.create({
             nombre,
@@ -107,10 +109,36 @@ const eliminarProductoVista = async (req, res) => {
     }
 };
 
+const activarProductoVista = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const producto = await Producto.findByPk(id);
+
+        if (!producto) {
+            return res.status(404).send("Producto no encontrado");
+        }
+
+        if (!producto.imagen) {
+            return res.send("No se puede activar un producto sin imagen");
+        }
+
+        producto.activo = true;
+        await producto.save();
+
+        res.redirect("/admin/dashboard");
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al activar producto");
+    }
+};
+
 module.exports= {
     mostrarDashboard,
     cargarProductoVista,
     mostrarEditarProductoVista,
     actualizarProductosVista,
-    eliminarProductoVista
+    eliminarProductoVista,
+    activarProductoVista
 }

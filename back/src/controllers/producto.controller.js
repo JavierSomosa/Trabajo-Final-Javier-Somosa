@@ -32,9 +32,17 @@ const crearProducto = async (req, res) => {
 
 const obtenerProductos = async (req, res) => {
   try {
-    const productos = await Producto.findAll({
-      where: { activo: true }
-    });
+
+    const { categoria } = req.query;
+
+    const where = { activo: true };
+
+    // Si viene categoría en la query, la agregamos al filtro
+    if (categoria) {
+      where.categoria = categoria;
+    }
+
+    const productos = await Producto.findAll({ where });
 
     res.json(productos);
 
