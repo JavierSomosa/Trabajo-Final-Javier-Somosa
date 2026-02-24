@@ -107,13 +107,26 @@ async function finalizar() {
     const res = await fetch("http://localhost:3000/api/ventas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, productos: carrito })
+        body: JSON.stringify({ 
+            nombre_cliente: nombre, 
+            productos: carrito.map(p => ({
+                id: p.id,
+                cantidad: p.cantidad
+            }))
+        })
     });
+
+    if (!res.ok) {
+        alert("Error al crear la venta");
+        return;
+    }
 
     const data = await res.json();
 
+    console.log(data);
+
     localStorage.removeItem("carrito");
-    localStorage.setItem("ticket", JSON.stringify(data));
+    localStorage.setItem("ticket", JSON.stringify(data.venta));
     window.location.href = "ticket.html";
 }
 

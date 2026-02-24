@@ -84,15 +84,28 @@ button {
 
 <h2>Productos Disponibles</h2>
 
+<div style="margin-bottom:15px;">
+    <button onclick="filtrar('')">Todos</button>
+    <button onclick="filtrar('Juego')">Juegos</button>
+    <button onclick="filtrar('Película')">Peliculas</button>
+</div>
+
 <div id="productos" class="grid"></div>
 
 <script>
 const API_URL = "http://localhost:3000/api";
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-async function obtenerProductos() {
+async function obtenerProductos(categoria = "") {
     try {
-        const res = await fetch(`${API_URL}/productos`);
+
+        let url = `${API_URL}/productos`;
+
+        if (categoria) {
+            url += `?categoria=${categoria}`;
+        }
+
+        const res = await fetch(url);
 
         if (!res.ok) {
             throw new Error("No se pudieron obtener los productos");
@@ -142,6 +155,10 @@ function agregar(id, nombre, precio) {
     }
     localStorage.setItem("carrito", JSON.stringify(carrito));
     alert("Producto agregado");
+}
+
+function filtrar(categoria) {
+    obtenerProductos(categoria);
 }
 
 function toggleTheme() {

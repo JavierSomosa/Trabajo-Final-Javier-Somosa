@@ -48,12 +48,12 @@ function cargarTicket() {
         return;
     }
 
-    let html = `<p><strong>Cliente:</strong> ${data.nombre}</p>`;
+    let html = `<p><strong>Cliente:</strong> ${data.nombre_cliente}</p>`;
     html += `<p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>`;
     html += "<ul>";
 
-    data.productos.forEach(p => {
-        html += `<li>${p.nombre} x${p.cantidad}</li>`;
+    data.Productos.forEach(p => {
+        html += `<li>${p.nombre} x${p.VentaProducto.cantidad}</li>`;
     });
 
     html += "</ul>";
