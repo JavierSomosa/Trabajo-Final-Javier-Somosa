@@ -10,7 +10,8 @@ router.get("/login", (req, res) => {
 
 const { mostrarDashboard, cargarProductoVista, 
     mostrarEditarProductoVista, actualizarProductosVista, 
-    eliminarProductoVista, activarProductoVista, mostrarRegistrosVista} = require("../controllers/admin.controller");
+    eliminarProductoVista, activarProductoVista, 
+    mostrarRegistrosVista, exportarRegistros} = require("../controllers/admin.controller");
 
 const{ verificarSesion } = require("../middlewares/auth.middleware.js")
 
@@ -38,6 +39,8 @@ router.post("/productos/:id/eliminar", verificarSesion, eliminarProductoVista);
 router.post("/productos/:id/activar", verificarSesion, activarProductoVista);
 
 router.get("/registros", verificarSesion, mostrarRegistrosVista);
+
+router.get("/registros/exportar", verificarSesion, exportarRegistros);
 
 router.get("/logout", (req, res) =>{
     req.session.destroy((error) => {

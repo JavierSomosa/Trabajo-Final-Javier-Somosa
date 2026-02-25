@@ -34,5 +34,38 @@
   <% }) %>
 </table>
 
+<h3>Últimos Inicios de Sesión</h3>
+<table border="1">
+  <tr>
+    <th>Usuario</th>
+    <th>Fecha</th>
+    <th>Acción</th>
+  </tr>
+
+  <% logs.forEach(log => { %>
+    <tr>
+      <td><%= log.Usuario.email %></td>
+      <td><%= new Date(log.fecha).toLocaleString() %></td>
+      <td><%= log.accion %></td>
+    </tr>
+  <% }) %>
+</table>
+
+<h3>Estadísticas Generales</h3>
+<table border="1">
+  <tr>
+    <th>Total Facturación</th>
+    <th>Productos Activos</th>
+  </tr>
+  <tr>
+    <td>$ <%= totalFacturacion || 0 %></td>
+    <td><%= totalProductosActivos %></td>
+  </tr>
+</table>
+
+<a href="/admin/registros/exportar">
+  <button>Descargar Excel</button>
+</a>
+
 <br>
 <a href="/admin/dashboard">Volver</a>

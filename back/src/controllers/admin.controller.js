@@ -2,6 +2,8 @@ const { fn, col, literal } = require("sequelize");
 const Venta = require("../models/Venta");
 const VentaProducto = require("../models/ventaProducto");
 const Producto = require("../models/Producto");
+const Log = require("../models/logs");
+const Usuario = require("../models/Usuarios");
 
 const mostrarDashboard = async(req, res) =>{
     try{
@@ -166,14 +168,100 @@ const mostrarRegistrosVista = async (req, res) => {
       limit: 10
     });
 
+    const logs = await Log.findAll({
+        include: {
+            model: Usuario,
+            attributes: ["email"]
+        },
+        order: [["fecha", "DESC"]],
+        limit: 20
+    });
+
+    const totalFacturacion = await Venta.sum("total");
+
+    const totalProductosActivos = await Producto.count({
+        where: { activo: true }
+    });
+
     res.render("registros", {
       ventasMasCaras,
-      productosMasVendidos
+      productosMasVendidos,
+      logs,
+      totalFacturacion,
+      totalProductosActivos
     });
 
   } catch (error) {
     console.error(error);
     res.redirect("/admin/dashboard");
+  }
+};
+
+const exportarRegistros = async (req, res) => {
+  try {
+
+    const ventasMasCaras = await Venta.findAll({
+      order: [["total", "DESC"]],
+      limit: 10
+    });
+
+    const productosMasVendidos = await VentaProducto.findAll({
+      attributes: [
+        "producto_id",
+        [fn("SUM", col("cantidad")), "total_vendido"]
+      ],
+      include: [{ model: Producto, attributes: ["nombre"] }],
+      group: ["VentaProducto.producto_id", "Producto.id"],
+      order: [[literal("total_vendido"), "DESC"]],
+      limit: 10
+    });
+
+    const logs = await Log.findAll({
+      include: { model: Usuario, attributes: ["email"] },
+      order: [["fecha", "DESC"]],
+      limit: 20
+    });
+
+    let csv = "";
+
+    // 🔹 Ventas más caras
+    csv += "TOP 10 VENTAS MÁS CARAS\n";
+    csv += "ID;Cliente;Total\n";
+
+    ventasMasCaras.forEach(v => {
+      csv += `${v.id};${v.nombre_cliente};${v.total}\n`;
+    });
+
+    csv += "\n";
+
+    // 🔹 Productos más vendidos
+    csv += "TOP 10 PRODUCTOS MÁS VENDIDOS\n";
+    csv += "Producto;Cantidad Vendida\n";
+
+    productosMasVendidos.forEach(p => {
+      csv += `${p.Producto ? p.Producto.nombre : "Sin nombre"};${p.dataValues.total_vendido}\n`;
+    });
+
+    csv += "\n";
+
+    // 🔹 Logs
+    csv += "LOGS DE INICIO DE SESIÓN\n";
+    csv += "Usuario;Fecha;Acción\n";
+
+    logs.forEach(l => {
+      csv += `${l.Usuario.email};${new Date(l.fecha).toLocaleString()};${l.accion}\n`;
+    });
+
+    // BOM para Excel
+    csv = "\uFEFF" + csv;
+
+    res.header("Content-Type", "text/csv; charset=utf-8");
+    res.attachment("registros.csv");
+    return res.send(csv);
+
+  } catch (error) {
+    console.error(error);
+    res.redirect("/admin/registros");
   }
 };
 
@@ -184,5 +272,6 @@ module.exports= {
     actualizarProductosVista,
     eliminarProductoVista,
     activarProductoVista,
-    mostrarRegistrosVista
+    mostrarRegistrosVista,
+    exportarRegistros
 }

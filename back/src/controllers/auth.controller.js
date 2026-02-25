@@ -1,7 +1,7 @@
 // para que el usuario este validado
 const Usuario = require('../models/Usuarios');
 const bcrypt = require('bcryptjs');
-
+const Log = require("../models/logs");
 
 const autentificarUsuario = async(req, res) =>{
     try{
@@ -30,6 +30,13 @@ const autentificarUsuario = async(req, res) =>{
             email: nuevoUsuario.email,
             rol: nuevoUsuario.rol
         }
+
+        //para el registro
+        await Log.create({
+            usuario_id: nuevoUsuario.id,
+            fecha: new Date(),
+            accion: "Inicio de sesión"
+            });
 
         res.redirect("/admin/dashboard");
 

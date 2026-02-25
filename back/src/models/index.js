@@ -4,6 +4,7 @@ const Producto = require("./Producto");
 const Venta = require("./Venta");
 const Usuario = require("./Usuarios");
 const VentaProducto = require("./ventaProducto");
+const Log = require("./logs");
 
 Venta.belongsToMany(Producto, {
   through: VentaProducto,
@@ -21,6 +22,14 @@ VentaProducto.belongsTo(Producto, {
 
 VentaProducto.belongsTo(Venta, {
   foreignKey: "venta_id"
+});
+
+Usuario.hasMany(Log, {
+  foreignKey: "usuario_id"
+});
+
+Log.belongsTo(Usuario, {
+  foreignKey: "usuario_id"
 });
 
 module.exports = {
