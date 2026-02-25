@@ -15,6 +15,14 @@ Producto.belongsToMany(Venta, {
   foreignKey: "producto_id"
 });
 
+VentaProducto.belongsTo(Producto, {
+  foreignKey: "producto_id"
+});
+
+VentaProducto.belongsTo(Venta, {
+  foreignKey: "venta_id"
+});
+
 module.exports = {
   sequelize,
   Producto,

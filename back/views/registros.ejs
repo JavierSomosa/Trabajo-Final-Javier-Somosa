@@ -1,0 +1,38 @@
+<h2>Registros</h2>
+
+<h3>Top 10 Ventas Más Caras</h3>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Cliente</th>
+    <th>Total</th>
+  </tr>
+
+  <% ventasMasCaras.forEach(venta => { %>
+    <tr>
+      <td><%= venta.id %></td>
+      <td><%= venta.nombre_cliente %></td>
+      <td>$<%= venta.total %></td>
+    </tr>
+  <% }) %>
+</table>
+
+<h3>Top 10 Productos Más Vendidos</h3>
+<table border="1">
+  <tr>
+    <th>Producto</th>
+    <th>Cantidad Vendida</th>
+  </tr>
+
+  <% productosMasVendidos.forEach(p => { %>
+    <tr>
+      <td>
+        <%= p.Producto ? p.Producto.nombre : "Sin producto" %>
+      </td>
+      <td><%= p.dataValues.total_vendido %></td>
+    </tr>
+  <% }) %>
+</table>
+
+<br>
+<a href="/admin/dashboard">Volver</a>

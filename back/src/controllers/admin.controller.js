@@ -1,4 +1,7 @@
-const Producto = require('../models/Producto');
+const { fn, col, literal } = require("sequelize");
+const Venta = require("../models/Venta");
+const VentaProducto = require("../models/ventaProducto");
+const Producto = require("../models/Producto");
 
 const mostrarDashboard = async(req, res) =>{
     try{
@@ -23,6 +26,9 @@ const cargarProductoVista = async(req, res) =>{
         }
 
         const activo = req.body.activo ? true : false;
+
+        console.log("REQ.BODY:", req.body);
+        console.log("ACTIVO CALCULADO:", req.body.activo ? true : false);
 
         await Producto.create({
             nombre,
@@ -134,11 +140,49 @@ const activarProductoVista = async (req, res) => {
     }
 };
 
+const mostrarRegistrosVista = async (req, res) => {
+  try {
+
+    // 🔥 Top 10 ventas más caras
+    const ventasMasCaras = await Venta.findAll({
+      order: [["total", "DESC"]],
+      limit: 10
+    });
+
+    // 🔥 Top 10 productos más vendidos
+    const productosMasVendidos = await VentaProducto.findAll({
+      attributes: [
+        "producto_id",
+        [fn("SUM", col("cantidad")), "total_vendido"]
+      ],
+      include: [
+        {
+          model: Producto,
+          attributes: ["nombre"]
+        }
+      ],
+      group: ["producto_id", "Producto.id"],
+      order: [[literal("total_vendido"), "DESC"]],
+      limit: 10
+    });
+
+    res.render("registros", {
+      ventasMasCaras,
+      productosMasVendidos
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.redirect("/admin/dashboard");
+  }
+};
+
 module.exports= {
     mostrarDashboard,
     cargarProductoVista,
     mostrarEditarProductoVista,
     actualizarProductosVista,
     eliminarProductoVista,
-    activarProductoVista
+    activarProductoVista,
+    mostrarRegistrosVista
 }

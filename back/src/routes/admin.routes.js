@@ -8,9 +8,14 @@ router.get("/login", (req, res) => {
     res.render("login", { error: null});
 });
 
-const { mostrarDashboard, cargarProductoVista, mostrarEditarProductoVista, actualizarProductosVista, eliminarProductoVista, activarProductoVista} = require("../controllers/admin.controller");
+const { mostrarDashboard, cargarProductoVista, 
+    mostrarEditarProductoVista, actualizarProductosVista, 
+    eliminarProductoVista, activarProductoVista, mostrarRegistrosVista} = require("../controllers/admin.controller");
+
 const{ verificarSesion } = require("../middlewares/auth.middleware.js")
+
 const{ autentificarUsuario } = require("../controllers/auth.controller.js");
+
 const validarProducto = require("../middlewares/validarProducto.js");
 
 router.get("/dashboard", verificarSesion, mostrarDashboard);
@@ -31,6 +36,8 @@ router.post("/productos/:id/editar", verificarSesion, upload.single("imagen"), v
 router.post("/productos/:id/eliminar", verificarSesion, eliminarProductoVista);
 
 router.post("/productos/:id/activar", verificarSesion, activarProductoVista);
+
+router.get("/registros", verificarSesion, mostrarRegistrosVista);
 
 router.get("/logout", (req, res) =>{
     req.session.destroy((error) => {
