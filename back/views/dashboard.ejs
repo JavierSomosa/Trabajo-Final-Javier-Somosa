@@ -58,9 +58,9 @@
                     <!-- SI ESTÁ ACTIVO → BOTÓN ELIMINAR -->
                     <% if (producto.activo) { %>
                         <form action="/admin/productos/<%= producto.id %>/eliminar"
-                              method="POST"
-                              onsubmit="return confirmarEliminacion();"
-                              style="display:inline;">
+                            method="POST"
+                            onsubmit="return confirmarEliminacion();"
+                            style="display:inline;">
                             <button type="submit">Eliminar</button>
                         </form>
                     <% } %>
@@ -68,9 +68,9 @@
                     <!-- SI ESTÁ INACTIVO → BOTÓN ACTIVAR -->
                     <% if (!producto.activo) { %>
                         <form action="/admin/productos/<%= producto.id %>/activar"
-                              method="POST"
-                              onsubmit="return confirmarActivacion();"
-                              style="display:inline;">
+                            method="POST"
+                            onsubmit="return confirmarActivacion();"
+                            style="display:inline;">
                             <button type="submit">Activar</button>
                         </form>
                     <% } %>

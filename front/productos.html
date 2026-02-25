@@ -128,12 +128,15 @@ async function obtenerProductos(categoria = "") {
             contenedor.innerHTML += `
                 <div class="card">
                     <img src="http://localhost:3000/uploads/${p.imagen}" 
-                         alt="${p.nombre}" 
-                         onerror="this.src='https://via.placeholder.com/150'" />
+                        alt="${p.nombre}" 
+                        onerror="this.src='https://via.placeholder.com/150'" />
                     <h3>${p.nombre}</h3>
                     <p>$${precioNumero.toLocaleString()}</p>
                     <button onclick="agregar(${p.id}, '${p.nombre}', ${precioNumero})">
                         Agregar
+                    </button>
+                    <button onclick="verDetalle(${p.id})">
+                        Ver detalle
                     </button>
                 </div>
             `;
@@ -159,6 +162,10 @@ function agregar(id, nombre, precio) {
 
 function filtrar(categoria) {
     obtenerProductos(categoria);
+}
+
+function verDetalle(id) {
+    window.location.href = `detalle.html?id=${id}`;
 }
 
 function toggleTheme() {

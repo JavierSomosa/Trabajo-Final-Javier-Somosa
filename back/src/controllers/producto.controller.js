@@ -147,11 +147,35 @@ const eliminarProducto = async (req, res) => {
     }
 };
 
+const obtenerProductoPorId = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const producto = await Producto.findOne({
+        where: {
+            id,
+            activo: true
+        }
+        });
+
+        if (!producto) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+        }
+
+        res.json(producto);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al obtener producto" });
+    }
+};
+
 module.exports = {
     crearProducto,
     obtenerProductos,
     editarProducto,
     desactivarProducto,
     activarProducto,
-    eliminarProducto
+    eliminarProducto,
+    obtenerProductoPorId
 };

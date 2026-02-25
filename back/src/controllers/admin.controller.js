@@ -143,126 +143,126 @@ const activarProductoVista = async (req, res) => {
 };
 
 const mostrarRegistrosVista = async (req, res) => {
-  try {
+    try {
 
-    // 🔥 Top 10 ventas más caras
-    const ventasMasCaras = await Venta.findAll({
-      order: [["total", "DESC"]],
-      limit: 10
-    });
+        // 🔥 Top 10 ventas más caras
+        const ventasMasCaras = await Venta.findAll({
+        order: [["total", "DESC"]],
+        limit: 10
+        });
 
-    // 🔥 Top 10 productos más vendidos
-    const productosMasVendidos = await VentaProducto.findAll({
-      attributes: [
-        "producto_id",
-        [fn("SUM", col("cantidad")), "total_vendido"]
-      ],
-      include: [
-        {
-          model: Producto,
-          attributes: ["nombre"]
-        }
-      ],
-      group: ["producto_id", "Producto.id"],
-      order: [[literal("total_vendido"), "DESC"]],
-      limit: 10
-    });
+        // 🔥 Top 10 productos más vendidos
+        const productosMasVendidos = await VentaProducto.findAll({
+        attributes: [
+            "producto_id",
+            [fn("SUM", col("cantidad")), "total_vendido"]
+        ],
+        include: [
+            {
+            model: Producto,
+            attributes: ["nombre"]
+            }
+        ],
+        group: ["producto_id", "Producto.id"],
+        order: [[literal("total_vendido"), "DESC"]],
+        limit: 10
+        });
 
-    const logs = await Log.findAll({
-        include: {
-            model: Usuario,
-            attributes: ["email"]
-        },
-        order: [["fecha", "DESC"]],
-        limit: 20
-    });
+        const logs = await Log.findAll({
+            include: {
+                model: Usuario,
+                attributes: ["email"]
+            },
+            order: [["fecha", "DESC"]],
+            limit: 20
+        });
 
-    const totalFacturacion = await Venta.sum("total");
+        const totalFacturacion = await Venta.sum("total");
 
-    const totalProductosActivos = await Producto.count({
-        where: { activo: true }
-    });
+        const totalProductosActivos = await Producto.count({
+            where: { activo: true }
+        });
 
-    res.render("registros", {
-      ventasMasCaras,
-      productosMasVendidos,
-      logs,
-      totalFacturacion,
-      totalProductosActivos
-    });
+        res.render("registros", {
+            ventasMasCaras,
+            productosMasVendidos,
+            logs,
+            totalFacturacion,
+            totalProductosActivos
+        });
 
-  } catch (error) {
-    console.error(error);
-    res.redirect("/admin/dashboard");
-  }
+    } catch (error) {
+        console.error(error);
+        res.redirect("/admin/dashboard");
+    }
 };
 
 const exportarRegistros = async (req, res) => {
-  try {
+    try {
 
-    const ventasMasCaras = await Venta.findAll({
-      order: [["total", "DESC"]],
-      limit: 10
-    });
+        const ventasMasCaras = await Venta.findAll({
+        order: [["total", "DESC"]],
+        limit: 10
+        });
 
-    const productosMasVendidos = await VentaProducto.findAll({
-      attributes: [
-        "producto_id",
-        [fn("SUM", col("cantidad")), "total_vendido"]
-      ],
-      include: [{ model: Producto, attributes: ["nombre"] }],
-      group: ["VentaProducto.producto_id", "Producto.id"],
-      order: [[literal("total_vendido"), "DESC"]],
-      limit: 10
-    });
+        const productosMasVendidos = await VentaProducto.findAll({
+        attributes: [
+            "producto_id",
+            [fn("SUM", col("cantidad")), "total_vendido"]
+        ],
+        include: [{ model: Producto, attributes: ["nombre"] }],
+        group: ["VentaProducto.producto_id", "Producto.id"],
+        order: [[literal("total_vendido"), "DESC"]],
+        limit: 10
+        });
 
-    const logs = await Log.findAll({
-      include: { model: Usuario, attributes: ["email"] },
-      order: [["fecha", "DESC"]],
-      limit: 20
-    });
+        const logs = await Log.findAll({
+        include: { model: Usuario, attributes: ["email"] },
+        order: [["fecha", "DESC"]],
+        limit: 20
+        });
 
-    let csv = "";
+        let csv = "";
 
-    // 🔹 Ventas más caras
-    csv += "TOP 10 VENTAS MÁS CARAS\n";
-    csv += "ID;Cliente;Total\n";
+        // 🔹 Ventas más caras
+        csv += "TOP 10 VENTAS MÁS CARAS\n";
+        csv += "ID;Cliente;Total\n";
 
-    ventasMasCaras.forEach(v => {
-      csv += `${v.id};${v.nombre_cliente};${v.total}\n`;
-    });
+        ventasMasCaras.forEach(v => {
+        csv += `${v.id};${v.nombre_cliente};${v.total}\n`;
+        });
 
-    csv += "\n";
+        csv += "\n";
 
-    // 🔹 Productos más vendidos
-    csv += "TOP 10 PRODUCTOS MÁS VENDIDOS\n";
-    csv += "Producto;Cantidad Vendida\n";
+        // 🔹 Productos más vendidos
+        csv += "TOP 10 PRODUCTOS MÁS VENDIDOS\n";
+        csv += "Producto;Cantidad Vendida\n";
 
-    productosMasVendidos.forEach(p => {
-      csv += `${p.Producto ? p.Producto.nombre : "Sin nombre"};${p.dataValues.total_vendido}\n`;
-    });
+        productosMasVendidos.forEach(p => {
+        csv += `${p.Producto ? p.Producto.nombre : "Sin nombre"};${p.dataValues.total_vendido}\n`;
+        });
 
-    csv += "\n";
+        csv += "\n";
 
-    // 🔹 Logs
-    csv += "LOGS DE INICIO DE SESIÓN\n";
-    csv += "Usuario;Fecha;Acción\n";
+        // 🔹 Logs
+        csv += "LOGS DE INICIO DE SESIÓN\n";
+        csv += "Usuario;Fecha;Acción\n";
 
-    logs.forEach(l => {
-      csv += `${l.Usuario.email};${new Date(l.fecha).toLocaleString()};${l.accion}\n`;
-    });
+        logs.forEach(l => {
+        csv += `${l.Usuario.email};${new Date(l.fecha).toLocaleString()};${l.accion}\n`;
+        });
 
-    // BOM para Excel
-    csv = "\uFEFF" + csv;
+        // BOM para Excel
+        csv = "\uFEFF" + csv;
 
-    res.header("Content-Type", "text/csv; charset=utf-8");
-    res.attachment("registros.csv");
-    return res.send(csv);
+        res.header("Content-Type", "text/csv; charset=utf-8");
+        res.attachment("registros.csv");
+        return res.send(csv);
 
-  } catch (error) {
-    console.error(error);
-    res.redirect("/admin/registros");
-  }
+    } catch (error) {
+        console.error(error);
+        res.redirect("/admin/registros");
+    }
 };
 
 module.exports= {
