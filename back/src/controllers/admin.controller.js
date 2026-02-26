@@ -1,4 +1,4 @@
-const { fn, col, literal } = require("sequelize");
+const { Op, fn, col, literal } = require("sequelize");
 const Venta = require("../models/Venta");
 const VentaProducto = require("../models/ventaProducto");
 const Producto = require("../models/Producto");
@@ -146,37 +146,67 @@ const activarProductoVista = async (req, res) => {
 const mostrarRegistrosVista = async (req, res) => {
     try {
 
+        const { desde, hasta } = req.query;
+
+        let filtroFecha = {};
+
+        if (desde && hasta) {
+            filtroFecha.createdAt = {
+                [Op.between]: [
+                    new Date(desde + " 00:00:00"),
+                    new Date(hasta + " 23:59:59")
+                ]
+            };
+        }
+
         // 🔥 Top 10 ventas más caras
         const ventasMasCaras = await Venta.findAll({
-        order: [["total", "DESC"]],
-        limit: 10
+            order: [["total", "DESC"]],
+            limit: 10
         });
 
         // 🔥 Top 10 productos más vendidos
         const productosMasVendidos = await VentaProducto.findAll({
-        attributes: [
-            "producto_id",
-            [fn("SUM", col("cantidad")), "total_vendido"]
-        ],
-        include: [
-            {
-            model: Producto,
-            attributes: ["nombre"]
-            }
-        ],
-        group: ["producto_id", "Producto.id"],
-        order: [[literal("total_vendido"), "DESC"]],
-        limit: 10
+            attributes: [
+                "producto_id",
+                [fn("SUM", col("cantidad")), "total_vendido"]
+            ],
+            include: [
+                {
+                    model: Producto,
+                    attributes: ["nombre"]
+                }
+            ],
+            group: ["producto_id", "Producto.id"],
+            order: [[literal("total_vendido"), "DESC"]],
+            limit: 10
         });
 
+        // 🔥 Logs (con filtro por fecha)
         const logs = await Log.findAll({
+            where: filtroFecha,
             include: {
                 model: Usuario,
                 attributes: ["email"]
             },
-            order: [["fecha", "DESC"]],
-            limit: 20
+            order: [["fecha", "DESC"]]
         });
+
+        // 🔥 Encuestas (con filtro por fecha)
+        const encuestas = await Encuesta.findAll({
+            where: filtroFecha,
+            order: [["createdAt", "DESC"]]
+        });
+
+        // 🔥 Resumen encuestas
+        const totalEncuestas = encuestas.length;
+
+        const promedioPuntuacion =
+            totalEncuestas > 0
+                ? encuestas.reduce((sum, e) => sum + e.puntuacion, 0) / totalEncuestas
+                : 0;
+
+        const totalPromos = encuestas.filter(e => e.acepta_promos).length;
 
         const totalFacturacion = await Venta.sum("total");
 
@@ -189,7 +219,13 @@ const mostrarRegistrosVista = async (req, res) => {
             productosMasVendidos,
             logs,
             totalFacturacion,
-            totalProductosActivos
+            totalProductosActivos,
+
+            // 🔥 nuevos datos
+            encuestas,
+            totalEncuestas,
+            promedioPuntuacion,
+            totalPromos
         });
 
     } catch (error) {
