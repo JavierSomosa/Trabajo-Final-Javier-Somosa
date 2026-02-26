@@ -11,7 +11,6 @@ body {
     transition: 0.4s ease;
 }
 
-/* HEADER */
 header {
     display: flex;
     justify-content: space-between;
@@ -30,12 +29,10 @@ nav a:hover {
     color: #6c63ff;
 }
 
-/* TITULO */
 .titulo-seccion {
     margin-bottom: 15px;
 }
 
-/* FILTROS */
 .filtros {
     margin-bottom: 20px;
 }
@@ -55,14 +52,12 @@ nav a:hover {
     background-color: #574fd6;
 }
 
-/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }
 
-/* CARD */
 .card {
     background: white;
     border-radius: 12px;
@@ -87,7 +82,6 @@ img {
     margin: 10px 0;
 }
 
-/* ACCIONES */
 .acciones button {
     margin: 5px;
     padding: 6px 10px;
@@ -103,7 +97,6 @@ img {
     background-color: #222;
 }
 
-/* BOTON TEMA */
 .theme-btn {
     position: absolute;
     top: 80px;
@@ -115,8 +108,6 @@ img {
     border-radius: 50px;
     cursor: pointer;
 }
-
-/* ================= DARK MODE ================= */
 
 body.dark {
     background: linear-gradient(135deg, #1f1f1f, #121212);

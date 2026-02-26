@@ -1,22 +1,18 @@
-// Mostrar saludo con el nombre guardado
 const nombre = localStorage.getItem("nombreCliente");
 
 if (!nombre) {
-    // Si no hay nombre, volvemos al inicio
     window.location.href = "index.html";
 }
 
 document.getElementById("saludo").innerText =
     `Hola ${nombre}, elegí tus productos`;
 
-// Traer productos desde la API
 fetch("http://localhost:3000/api/productos")
     .then(response => response.json())
     .then(productos => {
 
         const contenedor = document.getElementById("contenedor-productos");
 
-        // Filtramos solo los activos (por seguridad extra)
         const productosActivos = productos.filter(p => p.activo);
 
         productosActivos.forEach(producto => {
@@ -40,8 +36,6 @@ fetch("http://localhost:3000/api/productos")
         console.error("Error al cargar productos:", error);
     });
 
-
-// Función temporal (carrito lo hacemos después)
 function agregarAlCarrito(id) {
     alert("Producto agregado (lo implementamos en el próximo paso)");
 }

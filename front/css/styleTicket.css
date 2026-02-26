@@ -14,13 +14,11 @@ body {
     transition: 0.4s ease;
 }
 
-/* CONTENEDOR */
 .ticket-container {
     width: 420px;
     text-align: center;
 }
 
-/* CARD TICKET */
 .ticket-card {
     background: white;
     padding: 25px;
@@ -40,7 +38,6 @@ body {
     margin: 5px 0;
 }
 
-/* ACCIONES */
 .acciones {
     margin-top: 20px;
     display: flex;
@@ -70,7 +67,6 @@ body {
     opacity: 0.9;
 }
 
-/* BOTON TEMA */
 .theme-btn {
     position: absolute;
     top: 20px;
@@ -83,7 +79,6 @@ body {
     cursor: pointer;
 }
 
-/* DARK MODE */
 body.dark {
     background: linear-gradient(135deg, #1f1f1f, #121212);
     color: white;
@@ -94,7 +89,6 @@ body.dark .ticket-card {
     box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
 
-/* ESTILO IMPRESIÓN */
 @media print {
     .theme-btn,
     .acciones {
