@@ -19,6 +19,8 @@ const{ autentificarUsuario } = require("../controllers/auth.controller.js");
 
 const validarProducto = require("../middlewares/validarProducto.js");
 
+const { mostrarAsistenciaVista } = require("../controllers/admin.controller");
+
 router.get("/dashboard", verificarSesion, mostrarDashboard);
 
 //es solo para mostrar la pantalla
@@ -41,6 +43,8 @@ router.post("/productos/:id/activar", verificarSesion, activarProductoVista);
 router.get("/registros", verificarSesion, mostrarRegistrosVista);
 
 router.get("/registros/exportar", verificarSesion, exportarRegistros);
+
+router.get("/asistencia", mostrarAsistenciaVista);
 
 router.get("/logout", (req, res) =>{
     req.session.destroy((error) => {

@@ -4,6 +4,7 @@ const VentaProducto = require("../models/ventaProducto");
 const Producto = require("../models/Producto");
 const Log = require("../models/logs");
 const Usuario = require("../models/Usuarios");
+const Encuesta = require("../models/encuesta");
 
 const mostrarDashboard = async(req, res) =>{
     try{
@@ -265,6 +266,22 @@ const exportarRegistros = async (req, res) => {
     }
 };
 
+const mostrarAsistenciaVista = async (req, res) => {
+    try {
+
+        const encuestas = await Encuesta.findAll({
+            order: [["createdAt", "DESC"]]
+        });
+
+        res.render("asistencia", { encuestas });
+
+    } catch (error) {
+        console.error(error);
+        res.redirect("/admin/dashboard");
+    }
+};
+
+
 module.exports= {
     mostrarDashboard,
     cargarProductoVista,
@@ -273,5 +290,6 @@ module.exports= {
     eliminarProductoVista,
     activarProductoVista,
     mostrarRegistrosVista,
-    exportarRegistros
+    exportarRegistros,
+    mostrarAsistenciaVista
 }

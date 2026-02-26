@@ -28,7 +28,7 @@ const crearEncuesta = async (req, res) => {
         await Encuesta.create({
         opinion,
         email,
-        acepta_promos: acepta_promos === "true",
+        acepta_promos: !!req.body.acepta_promos,
         puntuacion,
         imagen
         });
@@ -41,7 +41,7 @@ const crearEncuesta = async (req, res) => {
               error: error.errors[0].message
           });
         }
-        
+
         console.log(error);
         res.status(500).json({ error: "Error al guardar encuesta" });
     }

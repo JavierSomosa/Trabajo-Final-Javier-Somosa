@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 //para las imagenes
 app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
 //para cors
 app.use(cors());
 //para el front
