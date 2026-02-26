@@ -1,4 +1,3 @@
-// para que el usuario este validado
 const Usuario = require('../models/Usuarios');
 const bcrypt = require('bcryptjs');
 const Log = require("../models/logs");
@@ -31,7 +30,6 @@ const autentificarUsuario = async(req, res) =>{
             rol: nuevoUsuario.rol
         }
 
-        //para el registro
         await Log.create({
             usuario_id: nuevoUsuario.id,
             fecha: new Date(),

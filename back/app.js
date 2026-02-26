@@ -42,7 +42,7 @@ app.use("/api/encuestas", encuestaRoutes);
 
 // Sincronizar BD
 sequelize.sync({ alter: true })
-  .then(() => console.log("🟢 BD sincronizada"))
+  .then(() => console.log("BD sincronizada"))
   .catch(err => console.error(err));
 
 app.listen(3000, () => {

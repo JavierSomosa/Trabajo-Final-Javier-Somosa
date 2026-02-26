@@ -1,8 +1,5 @@
 const {Producto} = require('../models');
 
-//req → lo que manda el cliente
-
-//res → lo que vos respondés
 const crearProducto = async (req, res) => {
     try {
         const {nombre, precio, categoria, imagen, activo} = req.body;
@@ -16,7 +13,7 @@ const crearProducto = async (req, res) => {
         nombre,
         precio,
         categoria,
-        imagen: imagen || null, // Si no se envía imagen, se guarda como null
+        imagen: imagen || null,
         activo: activo !== undefined ? activo : true // Por defecto, el producto es activo
         });
         res.status(201).json({
@@ -37,7 +34,6 @@ const obtenerProductos = async (req, res) => {
 
     const where = { activo: true };
 
-    // Si viene categoría en la query, la agregamos al filtro
     if (categoria) {
       where.categoria = categoria;
     }
@@ -54,21 +50,16 @@ const obtenerProductos = async (req, res) => {
 
 const editarProducto = async (req, res) => {
     try{
-        // 1. Obtener el id desde la URL
         const { id } = req.params;
 
-        // 2. Buscar el producto en la base de datos
         const producto = await Producto.findByPk(id);
 
-        // 3. Si no existe, devolver error 404
         if (!producto) {
         return res.status(404).json({ mensaje: "Producto no encontrado" });
         }
 
-        // 4. Actualizar solo los campos que vengan en el body
         await producto.update(req.body);
 
-        // 5. Responder con éxito
         res.status(200).json({
         mensaje: "Producto actualizado correctamente",
         producto: producto

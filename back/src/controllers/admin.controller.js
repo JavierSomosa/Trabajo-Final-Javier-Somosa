@@ -159,13 +159,11 @@ const mostrarRegistrosVista = async (req, res) => {
             };
         }
 
-        // 🔥 Top 10 ventas más caras
         const ventasMasCaras = await Venta.findAll({
             order: [["total", "DESC"]],
             limit: 10
         });
 
-        // 🔥 Top 10 productos más vendidos
         const productosMasVendidos = await VentaProducto.findAll({
             attributes: [
                 "producto_id",
