@@ -180,7 +180,6 @@ const mostrarRegistrosVista = async (req, res) => {
             limit: 10
         });
 
-        // 🔥 Logs (con filtro por fecha)
         const logs = await Log.findAll({
             where: filtroFecha,
             include: {
@@ -190,13 +189,11 @@ const mostrarRegistrosVista = async (req, res) => {
             order: [["fecha", "DESC"]]
         });
 
-        // 🔥 Encuestas (con filtro por fecha)
         const encuestas = await Encuesta.findAll({
             where: filtroFecha,
             order: [["createdAt", "DESC"]]
         });
 
-        // 🔥 Resumen encuestas
         const totalEncuestas = encuestas.length;
 
         const promedioPuntuacion =
