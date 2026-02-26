@@ -1,124 +1,141 @@
-<h2>Registros</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registros y Estadísticas</title>
+    <link rel="stylesheet" href="/css/registros.css">
+</head>
+<body>
 
-<h2>Filtrar por fecha</h2>
+<div class="container">
 
-<form method="GET" action="/admin/registros">
-    <label>Desde:</label>
-    <input type="date" name="desde">
+    <h2>Registros y Estadísticas</h2>
 
-    <label>Hasta:</label>
-    <input type="date" name="hasta">
+    <!-- FILTRO -->
+    <div class="card">
+        <h3>Filtrar por fecha</h3>
+        <form method="GET" action="/admin/registros" class="filter-form">
+            <div>
+                <label>Desde</label>
+                <input type="date" name="desde">
+            </div>
 
-    <button type="submit">Filtrar</button>
-</form>
+            <div>
+                <label>Hasta</label>
+                <input type="date" name="hasta">
+            </div>
 
-<hr>
+            <button type="submit" class="btn primary">Filtrar</button>
+        </form>
+    </div>
 
-<h3>Top 10 Ventas Más Caras</h3>
-<table border="1">
-  <tr>
-    <th>ID</th>
-    <th>Cliente</th>
-    <th>Total</th>
-  </tr>
+    <!-- ESTADÍSTICAS -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Facturación</h4>
+            <p>$ <%= totalFacturacion || 0 %></p>
+        </div>
 
-  <% ventasMasCaras.forEach(venta => { %>
-    <tr>
-      <td><%= venta.id %></td>
-      <td><%= venta.nombre_cliente %></td>
-      <td>$<%= venta.total %></td>
-    </tr>
-  <% }) %>
-</table>
+        <div class="stat-card">
+            <h4>Productos Activos</h4>
+            <p><%= totalProductosActivos %></p>
+        </div>
 
-<h3>Top 10 Productos Más Vendidos</h3>
-<table border="1">
-  <tr>
-    <th>Producto</th>
-    <th>Cantidad Vendida</th>
-  </tr>
+        <div class="stat-card">
+            <h4>Total Encuestas</h4>
+            <p><%= totalEncuestas %></p>
+        </div>
 
-  <% productosMasVendidos.forEach(p => { %>
-    <tr>
-      <td>
-        <%= p.Producto ? p.Producto.nombre : "Sin producto" %>
-      </td>
-      <td><%= p.dataValues.total_vendido %></td>
-    </tr>
-  <% }) %>
-</table>
+        <div class="stat-card">
+            <h4>Promedio Puntuación</h4>
+            <p><%= promedioPuntuacion.toFixed(2) %></p>
+        </div>
+    </div>
 
-<h3>Últimos Inicios de Sesión</h3>
-<table border="1">
-  <tr>
-    <th>Usuario</th>
-    <th>Fecha</th>
-    <th>Acción</th>
-  </tr>
+    <!-- TOP VENTAS -->
+    <div class="card">
+        <h3>Top 10 Ventas Más Caras</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Total</th>
+            </tr>
+            <% ventasMasCaras.forEach(venta => { %>
+                <tr>
+                    <td><%= venta.id %></td>
+                    <td><%= venta.nombre_cliente %></td>
+                    <td>$ <%= venta.total %></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
 
-  <% logs.forEach(log => { %>
-    <tr>
-      <td><%= log.Usuario.email %></td>
-      <td><%= new Date(log.fecha).toLocaleString() %></td>
-      <td><%= log.accion %></td>
-    </tr>
-  <% }) %>
-</table>
+    <!-- TOP PRODUCTOS -->
+    <div class="card">
+        <h3>Top 10 Productos Más Vendidos</h3>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+            </tr>
+            <% productosMasVendidos.forEach(p => { %>
+                <tr>
+                    <td><%= p.Producto ? p.Producto.nombre : "Sin producto" %></td>
+                    <td><%= p.dataValues.total_vendido %></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
 
-<h3>Estadísticas Generales</h3>
-<table border="1">
-  <tr>
-    <th>Total Facturación</th>
-    <th>Productos Activos</th>
-  </tr>
-  <tr>
-    <td>$ <%= totalFacturacion || 0 %></td>
-    <td><%= totalProductosActivos %></td>
-  </tr>
-</table>
+    <!-- LOGS -->
+    <div class="card">
+        <h3>Últimos Inicios de Sesión</h3>
+        <table>
+            <tr>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+            </tr>
+            <% logs.forEach(log => { %>
+                <tr>
+                    <td><%= log.Usuario.email %></td>
+                    <td><%= new Date(log.fecha).toLocaleString() %></td>
+                    <td><%= log.accion %></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
 
-<h3>Encuestas / Asistencias</h3>
+    <!-- ENCUESTAS -->
+    <div class="card">
+        <h3>Encuestas / Asistencias</h3>
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>Opinión</th>
+                <th>Puntuación</th>
+                <th>Promos</th>
+                <th>Fecha</th>
+            </tr>
+            <% encuestas.forEach(encuesta => { %>
+                <tr>
+                    <td><%= encuesta.email %></td>
+                    <td><%= encuesta.opinion %></td>
+                    <td><%= encuesta.puntuacion %></td>
+                    <td><%= encuesta.acepta_promos ? "Sí" : "No" %></td>
+                    <td><%= new Date(encuesta.createdAt).toLocaleDateString() %></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
 
-<table border="1">
-    <tr>
-        <th>Email</th>
-        <th>Opinión</th>
-        <th>Puntuación</th>
-        <th>Acepta Promos</th>
-        <th>Fecha</th>
-    </tr>
+    <!-- BOTONES -->
+    <div class="buttons">
+        <a href="/admin/registros/exportar" class="btn success">Descargar Excel</a>
+        <a href="/admin/dashboard" class="btn secondary">Volver al Dashboard</a>
+    </div>
 
-    <% encuestas.forEach(encuesta => { %>
-        <tr>
-            <td><%= encuesta.email %></td>
-            <td><%= encuesta.opinion %></td>
-            <td><%= encuesta.puntuacion %></td>
-            <td><%= encuesta.acepta_promos ? "Sí" : "No" %></td>
-            <td><%= new Date(encuesta.createdAt).toLocaleDateString() %></td>
-        </tr>
-    <% }) %>
-</table>
+</div>
 
-<hr>
-
-<h2>Resumen de Encuestas</h2>
-
-<table border="1">
-    <tr>
-        <th>Total Encuestas</th>
-        <th>Promedio Puntuación</th>
-        <th>Aceptan Promos</th>
-    </tr>
-    <tr>
-        <td><%= totalEncuestas %></td>
-        <td><%= promedioPuntuacion.toFixed(2) %></td>
-        <td><%= totalPromos %></td>
-    </tr>
-</table>
-
-<a href="/admin/registros/exportar">
-  <button>Descargar Excel</button>
-</a>
-
-<br>
-<a href="/admin/dashboard">Volver</a>
+</body>
+</html>

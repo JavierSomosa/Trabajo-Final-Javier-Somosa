@@ -2,19 +2,40 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Detalle del Producto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zona Gamer - Detalle</title>
+
+<link rel="stylesheet" href="css/styleDetalle.css">
 </head>
 
 <body>
 
-<h1>Detalle del Producto</h1>
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
-<div id="detalle"></div>
+<div class="contenedor">
+    <h1>🎮 Detalle del Producto</h1>
 
-<br>
-<a href="productos.html">Volver a productos</a>
+    <div id="detalle" class="card-detalle"></div>
+
+    <a class="volver" href="productos.html">← Volver a productos</a>
+</div>
 
 <script src="js/detalle.js"></script>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("tema",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+
+window.onload = function () {
+    if (localStorage.getItem("tema") === "dark") {
+        document.body.classList.add("dark");
+    }
+};
+</script>
 
 </body>
 </html>

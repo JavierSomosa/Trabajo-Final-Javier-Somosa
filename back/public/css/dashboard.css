@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+}
+
+.topbar {
+    background-color: #1e293b;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout {
+    color: #f87171;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.actions {
+    padding: 20px 30px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background-color: #e2e8f0;
+    color: #1e293b;
+    margin-right: 10px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.btn.primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn.success {
+    background-color: #16a34a;
+    color: white;
+}
+
+.btn.danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+.btn.small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.tabla-container {
+    padding: 20px 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background-color: #1e293b;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f5f9;
+}
+
+img {
+    width: 70px;
+    border-radius: 6px;
+}
+
+.activo {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.inactivo {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.acciones form {
+    display: inline;
+}

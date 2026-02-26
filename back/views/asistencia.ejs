@@ -1,36 +1,61 @@
-<h2>Encuestas de Ayuda</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encuestas de Ayuda</title>
+    <link rel="stylesheet" href="/css/asistencia.css">
+</head>
+<body>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Opinión</th>
-            <th>Puntuación</th>
-            <th>Acepta Promos</th>
-            <th>Imagen</th>
-            <th>Fecha</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% encuestas.forEach(encuesta => { %>
-            <tr>
-                <td><%= encuesta.id %></td>
-                <td><%= encuesta.email %></td>
-                <td><%= encuesta.opinion %></td>
-                <td><%= encuesta.puntuacion %></td>
-                <td><%= encuesta.acepta_promos ? "Sí" : "No" %></td>
-                <td>
-                    <% if (encuesta.imagen) { %>
-                        <img src="/uploads/<%= encuesta.imagen %>" width="80">
-                    <% } else { %>
-                        Sin imagen
-                    <% } %>
-                </td>
-                <td><%= encuesta.createdAt.toLocaleString() %></td>
-            </tr>
-        <% }) %>
-    </tbody>
-</table>
-<br>
-<a href="/admin/dashboard">Volver</a>
+<div class="container">
+
+    <h2>Encuestas de Ayuda</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Opinión</th>
+                    <th>Puntuación</th>
+                    <th>Promos</th>
+                    <th>Imagen</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% encuestas.forEach(encuesta => { %>
+                    <tr>
+                        <td><%= encuesta.id %></td>
+                        <td><%= encuesta.email %></td>
+                        <td><%= encuesta.opinion %></td>
+                        <td>
+                            <span class="badge">
+                                <%= encuesta.puntuacion %>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="<%= encuesta.acepta_promos ? 'yes' : 'no' %>">
+                                <%= encuesta.acepta_promos ? "Sí" : "No" %>
+                            </span>
+                        </td>
+                        <td>
+                            <% if (encuesta.imagen) { %>
+                                <img src="/uploads/<%= encuesta.imagen %>" class="mini-img">
+                            <% } else { %>
+                                <span class="no-img">Sin imagen</span>
+                            <% } %>
+                        </td>
+                        <td><%= encuesta.createdAt.toLocaleString() %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+    <div class="buttons">
+        <a href="/admin/dashboard" class="btn">Volver al Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -2,56 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zona Gamer - Carrito</title>
 
-<style>
-body {
-    font-family: Arial;
-    margin: 0;
-    padding: 20px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.item {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-button {
-    padding: 5px 8px;
-    margin-left: 5px;
-}
-
-.dark {
-    background: #121212;
-    color: white;
-}
-
-.dark button {
-    background: #333;
-    color: white;
-    border: 1px solid #555;
-}
-
-.theme-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-</style>
+<link rel="stylesheet" href="css/styleCarrito.css">
 </head>
 
 <body>
 
-<button class="theme-btn" onclick="toggleTheme()">Cambiar tema</button>
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
-<h1>🛒 Carrito</h1>
+<div class="contenedor">
+    <h1>🛒 Carrito</h1>
 
-<div id="carrito"></div>
-<h3 id="total"></h3>
+    <div id="carrito" class="lista-carrito"></div>
 
-<button onclick="finalizar()">Finalizar compra</button>
-<a href="productos.html">Volver</a>
+    <h3 id="total" class="total"></h3>
+
+    <div class="acciones">
+        <button class="btn-finalizar" onclick="finalizar()">Finalizar compra</button>
+        <a href="productos.html" class="volver">← Volver</a>
+    </div>
+</div>
 
 <script>
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -66,9 +38,11 @@ function render() {
 
         contenedor.innerHTML += `
             <div class="item">
-                ${p.nombre} x${p.cantidad}
-                <button onclick="sumar(${p.id})">+</button>
-                <button onclick="restar(${p.id})">-</button>
+                <span>${p.nombre} x${p.cantidad}</span>
+                <div>
+                    <button onclick="sumar(${p.id})">+</button>
+                    <button onclick="restar(${p.id})">-</button>
+                </div>
             </div>
         `;
     });
@@ -122,8 +96,6 @@ async function finalizar() {
     }
 
     const data = await res.json();
-
-    console.log(data);
 
     localStorage.removeItem("carrito");
     localStorage.setItem("ticket", JSON.stringify(data.venta));

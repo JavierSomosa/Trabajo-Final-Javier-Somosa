@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e3e3e3, #ffffff);
+    transition: 0.4s ease;
+}
+
+/* CONTENEDOR */
+.contenedor {
+    width: 450px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ITEMS */
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.item button {
+    padding: 4px 10px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.item button:hover {
+    opacity: 0.8;
+}
+
+/* TOTAL */
+.total {
+    margin-top: 15px;
+    text-align: right;
+    font-size: 18px;
+}
+
+/* ACCIONES */
+.acciones {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-finalizar {
+    padding: 10px 15px;
+    background: #28a745;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-finalizar:hover {
+    opacity: 0.9;
+}
+
+.volver {
+    text-decoration: none;
+    font-weight: bold;
+    color: #6c63ff;
+}
+
+/* BOTON TEMA */
+.theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark {
+    background: linear-gradient(135deg, #1f1f1f, #121212);
+    color: white;
+}
+
+body.dark .contenedor {
+    background: #1e1e1e;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
+body.dark .item {
+    border-bottom: 1px solid #333;
+}
+
+body.dark .volver {
+    color: #9a8cff;
+}

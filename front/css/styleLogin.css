@@ -1,0 +1,118 @@
+/* ===== RESET BÁSICO ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e3e3e3, #ffffff);
+    transition: all 0.4s ease;
+}
+
+/* ===== CONTENEDOR ===== */
+.login-container {
+    background: white;
+    padding: 40px;
+    width: 320px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.login-container h1 {
+    margin-bottom: 25px;
+}
+
+/* ===== INPUT ===== */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #6c63ff;
+    outline: none;
+}
+
+/* ===== BOTÓN ===== */
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c63ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #574fd6;
+}
+
+/* ===== LINK ADMIN ===== */
+.admin-link {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.admin-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== BOTÓN TEMA ===== */
+.theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-btn:hover {
+    background: #574fd6;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark {
+    background: linear-gradient(135deg, #1f1f1f, #121212);
+}
+
+body.dark .login-container {
+    background: #1e1e1e;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+body.dark input {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: white;
+}
+
+body.dark .admin-link {
+    color: #aaa;
+}

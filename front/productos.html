@@ -2,76 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zona Gamer - Productos</title>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    transition: background 0.3s, color 0.3s;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav a {
-    margin-left: 15px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    text-align: center;
-}
-
-img {
-    max-width: 100%;
-    height: 150px;
-    object-fit: contain;
-}
-
-button {
-    padding: 6px 10px;
-    cursor: pointer;
-}
-
-.dark {
-    background-color: #121212;
-    color: white;
-}
-
-.dark .card {
-    border: 1px solid #444;
-}
-
-.dark button {
-    background: #333;
-    color: white;
-    border: 1px solid #555;
-}
-
-.theme-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-</style>
+<link rel="stylesheet" href="css/styleProductos.css">
 </head>
 
 <body>
 
-<button class="theme-btn" onclick="toggleTheme()">Cambiar tema</button>
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
 <header>
     <h1>🎮 Zona Gamer</h1>
@@ -82,12 +21,12 @@ button {
     </nav>
 </header>
 
-<h2>Productos Disponibles</h2>
+<h2 class="titulo-seccion">Productos Disponibles</h2>
 
-<div style="margin-bottom:15px;">
+<div class="filtros">
     <button onclick="filtrar('')">Todos</button>
     <button onclick="filtrar('Juego')">Juegos</button>
-    <button onclick="filtrar('Película')">Peliculas</button>
+    <button onclick="filtrar('Película')">Películas</button>
 </div>
 
 <div id="productos" class="grid"></div>
@@ -131,13 +70,15 @@ async function obtenerProductos(categoria = "") {
                         alt="${p.nombre}" 
                         onerror="this.src='https://via.placeholder.com/150'" />
                     <h3>${p.nombre}</h3>
-                    <p>$${precioNumero.toLocaleString()}</p>
-                    <button onclick="agregar(${p.id}, '${p.nombre}', ${precioNumero})">
-                        Agregar
-                    </button>
-                    <button onclick="verDetalle(${p.id})">
-                        Ver detalle
-                    </button>
+                    <p class="precio">$${precioNumero.toLocaleString()}</p>
+                    <div class="acciones">
+                        <button onclick="agregar(${p.id}, '${p.nombre}', ${precioNumero})">
+                            Agregar
+                        </button>
+                        <button onclick="verDetalle(${p.id})">
+                            Ver detalle
+                        </button>
+                    </div>
                 </div>
             `;
         });

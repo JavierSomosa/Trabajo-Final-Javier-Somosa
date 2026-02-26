@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e3e3e3, #ffffff);
+    transition: 0.4s ease;
+}
+
+/* CONTENEDOR */
+.contenedor {
+    width: 420px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+    padding: 8px;
+}
+
+input, textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+/* BOTONES */
+.acciones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-enviar {
+    background: #6c63ff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-omitir {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.modal-content button {
+    margin-top: 10px;
+    background: #28a745;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* BOTON TEMA */
+.theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* DARK MODE */
+body.dark {
+    background: linear-gradient(135deg, #1f1f1f, #121212);
+    color: white;
+}
+
+body.dark .contenedor,
+body.dark .modal-content {
+    background: #1e1e1e;
+}
+
+body.dark input,
+body.dark textarea {
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+}

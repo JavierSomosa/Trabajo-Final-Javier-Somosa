@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login Admin</title>
-    </head>
-    <body>
-        <h2>Login Administrador </h2>
+<head>
+    <title>Admin - Login</title>
+    <link rel="stylesheet" href="/css/loginAdmin.css">
+</head>
+<body class="admin-login">
+
+    <div class="login-container">
+
+        <h2>Panel Administrador</h2>
 
         <% if (error) { %>
-            <p style="color:red;"><%= error %></p>
+            <div class="error-box">
+                <%= error %>
+            </div>
         <% } %>
 
         <form action="/admin/login" method="POST">
-            <div>
-                <label>Email:</label>
+
+            <div class="form-group">
+                <label>Email</label>
                 <input type="email" name="email" required>
             </div>
 
-            <div>
-                <label>Password:</label>
+            <div class="form-group">
+                <label>Password</label>
                 <input type="password" name="password" required>
             </div>
 
-            <button type="submit">Ingresar</button>
-            <button type="button" onclick="autocompletar()">Acceso rápido</button>
+            <button type="submit" class="btn-primary">Ingresar</button>
+            <button type="button" class="btn-secondary" onclick="autocompletar()">Acceso rápido</button>
+
         </form>
-        
-        <script>
-        function autocompletar() {
-            document.querySelector('input[name="email"]').value = "admin@mail.com";
-            document.querySelector('input[name="password"]').value = "1234";
-        }
-        </script>
-    </body>
-    <br>
-    <a href="/index.html">Salir</a>
+
+        <a href="/index.html" class="salir">← Volver al sitio</a>
+
+    </div>
+
+<script>
+function autocompletar() {
+    document.querySelector('input[name="email"]').value = "admin@mail.com";
+    document.querySelector('input[name="password"]').value = "1234";
+}
+</script>
+
+</body>
 </html>

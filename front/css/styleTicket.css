@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e3e3e3, #ffffff);
+    transition: 0.4s ease;
+}
+
+/* CONTENEDOR */
+.ticket-container {
+    width: 420px;
+    text-align: center;
+}
+
+/* CARD TICKET */
+.ticket-card {
+    background: white;
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.ticket-card p {
+    margin-bottom: 8px;
+}
+
+.item-ticket {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+/* ACCIONES */
+.acciones {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-pdf {
+    padding: 8px 14px;
+    background: #6c63ff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-salir {
+    padding: 8px 14px;
+    background: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-pdf:hover,
+.btn-salir:hover {
+    opacity: 0.9;
+}
+
+/* BOTON TEMA */
+.theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background: #6c63ff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* DARK MODE */
+body.dark {
+    background: linear-gradient(135deg, #1f1f1f, #121212);
+    color: white;
+}
+
+body.dark .ticket-card {
+    background: #1e1e1e;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* ESTILO IMPRESIÓN */
+@media print {
+    .theme-btn,
+    .acciones {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .ticket-card {
+        box-shadow: none;
+    }
+}

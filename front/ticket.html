@@ -2,43 +2,29 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zona Gamer - Ticket</title>
 
-<style>
-body {
-    font-family: Arial;
-    text-align: center;
-    padding: 20px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.dark {
-    background: #121212;
-    color: white;
-}
-
-.theme-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-</style>
+<link rel="stylesheet" href="css/styleTicket.css">
 </head>
 
 <body>
 
-<button class="theme-btn" onclick="toggleTheme()">Cambiar tema</button>
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
-<h1>🎮 Zona Gamer</h1>
-<h2>Ticket de Compra</h2>
+<div class="ticket-container">
 
-<div id="ticket"></div>
+    <h1>🎮 Zona Gamer</h1>
+    <h2>Ticket de Compra</h2>
 
-<button onclick="window.print()">Descargar PDF</button>
-<br><br>
-<button onclick="window.location.href='encuesta.html'">
-    Salir
-</button>
+    <div id="ticket" class="ticket-card"></div>
+
+    <div class="acciones">
+        <button class="btn-pdf" onclick="window.print()">Descargar PDF</button>
+        <button class="btn-salir" onclick="salir()">Salir</button>
+    </div>
+
+</div>
 
 <script>
 function cargarTicket() {
@@ -46,20 +32,29 @@ function cargarTicket() {
     const contenedor = document.getElementById("ticket");
 
     if (!data) {
-        contenedor.innerHTML = "No hay ticket disponible.";
+        contenedor.innerHTML = "<p>No hay ticket disponible.</p>";
         return;
     }
 
-    let html = `<p><strong>Cliente:</strong> ${data.nombre_cliente}</p>`;
-    html += `<p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>`;
-    html += "<ul>";
+    let html = `
+        <p><strong>Cliente:</strong> ${data.nombre_cliente}</p>
+        <p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>
+        <hr>
+    `;
 
     data.Productos.forEach(p => {
-        html += `<li>${p.nombre} x${p.VentaProducto.cantidad}</li>`;
+        html += `
+            <div class="item-ticket">
+                <span>${p.nombre}</span>
+                <span>x${p.VentaProducto.cantidad}</span>
+            </div>
+        `;
     });
 
-    html += "</ul>";
-    html += `<p><strong>Total:</strong> $${data.total}</p>`;
+    html += `
+        <hr>
+        <h3>Total: $${data.total}</h3>
+    `;
 
     contenedor.innerHTML = html;
 }
@@ -67,7 +62,7 @@ function cargarTicket() {
 function salir() {
     localStorage.removeItem("ticket");
     localStorage.removeItem("nombreUsuario");
-    window.location.href = "index.html";
+    window.location.href = "encuesta.html";
 }
 
 function toggleTheme() {

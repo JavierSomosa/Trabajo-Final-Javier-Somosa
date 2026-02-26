@@ -1,54 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zona Gamer - Encuesta</title>
+
+<link rel="stylesheet" href="css/styleEncuesta.css">
 </head>
+
 <body>
+
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+<div class="contenedor">
+
+    <h1>📝 Encuesta</h1>
+
     <form id="formEncuesta">
 
-    <textarea name="opinion" required minlength="1"
-    placeholder="Escribí tu opinión"></textarea>
+        <textarea name="opinion" required minlength="1"
+        placeholder="Escribí tu opinión"></textarea>
 
-    <br><br>
+        <input type="email" name="email" required placeholder="Tu email">
 
-    <input type="email" name="email" required placeholder="Tu email">
+        <label class="checkbox">
+            <input type="checkbox" name="acepta_promos">
+            Quiero recibir promociones
+        </label>
 
-    <br><br>
+        <label>Puntuación: <span id="valor">5</span></label>
+        <input type="range" name="puntuacion" min="1" max="10" value="5"
+        oninput="valor.innerText=this.value">
 
-    <label>
-    <input type="checkbox" name="acepta_promos">
-    Quiero recibir promociones
-    </label>
+        <input type="file" name="imagen" accept="image/*" required>
 
-    <br><br>
-
-    <label>Puntuación:</label>
-    <input type="range" name="puntuacion" min="1" max="10" value="5"
-    oninput="valor.innerText=this.value">
-    <span id="valor">5</span>
-
-    <br><br>
-
-    <input type="file" name="imagen" accept="image/*" required>
-
-    <br><br>
-
-    <button type="button" id="btnEnviar">Enviar</button>
-    <button type="button" onclick="omitir()">Omitir</button>
+        <div class="acciones">
+            <button type="button" id="btnEnviar" class="btn-enviar">Enviar</button>
+            <button type="button" class="btn-omitir" onclick="omitir()">Omitir</button>
+        </div>
 
     </form>
 
-    <div id="modal" class="modal">
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
     <div class="modal-content">
-        <h3>¡Gracias por tu opinión!</h3>
+        <h3>¡Gracias por tu opinión! 🎉</h3>
         <p>Tu encuesta fue enviada correctamente.</p>
         <button type="button" onclick="volverInicio()">Continuar</button>
     </div>
-    </div>
+</div>
 
-    <script src="js/encuesta.js"></script>
+<script src="js/encuesta.js"></script>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("tema",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+
+window.onload = function () {
+    if (localStorage.getItem("tema") === "dark") {
+        document.body.classList.add("dark");
+    }
+};
+</script>
+
 </body>
 </html>
