@@ -2,6 +2,7 @@ const express = require("express");
 const { sequelize } = require("./src/models");
 const session = require("express-session");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 //para cors
 app.use(cors());
+//para el front
+app.use(express.static(path.join(__dirname, "../front")));
 
 app.use(session({
   secret: "super_secreto_tp",
@@ -27,11 +30,14 @@ const productosRoutes = require("./src/routes/productos.routes");
 const usuariosRoutes = require("./src/routes/usuarios.routes");
 const adminRoutes = require("./src/routes/admin.routes");
 const ventasRoutes = require("./src/routes/ventas.routes");
+const encuestaRoutes = require("./src/routes/encuesta.routes");
+
 // 👉 USAR RUTAS
 app.use("/api/productos", productosRoutes);
 app.use("/api/usuarios", usuariosRoutes);
 app.use("/admin", adminRoutes);
 app.use("/api/ventas", ventasRoutes);
+app.use("/api/encuestas", encuestaRoutes);
 
 // Sincronizar BD
 sequelize.sync({ alter: true })

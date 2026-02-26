@@ -5,6 +5,7 @@ const Venta = require("./Venta");
 const Usuario = require("./Usuarios");
 const VentaProducto = require("./ventaProducto");
 const Log = require("./logs");
+const Encuesta = require("./encuesta");
 
 Venta.belongsToMany(Producto, {
   through: VentaProducto,
@@ -36,5 +37,6 @@ module.exports = {
   sequelize,
   Producto,
   Venta,
-  Usuario
+  Usuario,
+  Encuesta
 };
