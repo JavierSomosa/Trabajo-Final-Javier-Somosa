@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize");
 
+//http://localhost:3000/
+
 const sequelize = new Sequelize(
   "autoservicio_tp",
   "root",

@@ -6,13 +6,11 @@ const crearVenta = async (req, res) => {
   try {
     const { nombre_cliente, productos } = req.body;
 
-    // 1️⃣ Validaciones básicas
     if (!nombre_cliente || !productos || !Array.isArray(productos) || productos.length === 0) {
       await transaction.rollback();
       return res.status(400).json({ mensaje: "Datos incompletos o inválidos" });
     }
 
-    // Validar cantidades
     for (let item of productos) {
       if (!item.id || !item.cantidad || item.cantidad <= 0) {
         await transaction.rollback();
@@ -20,7 +18,6 @@ const crearVenta = async (req, res) => {
       }
     }
 
-    // 2️⃣ Buscar productos activos en BD
     const productosBD = await Producto.findAll({
       where: {
         id: productos.map(p => p.id),
@@ -29,7 +26,6 @@ const crearVenta = async (req, res) => {
       transaction
     });
 
-    // Verificar que existan todos los productos solicitados
     if (productosBD.length !== productos.length) {
       await transaction.rollback();
       return res.status(400).json({ mensaje: "Uno o más productos no existen o están inactivos" });
@@ -37,20 +33,17 @@ const crearVenta = async (req, res) => {
 
     let total = 0;
 
-    // 3️⃣ Calcular total correctamente
     productosBD.forEach(prod => {
       const prodCarrito = productos.find(p => p.id === prod.id);
-      const precio = parseFloat(prod.precio); // DECIMAL viene como string
+      const precio = parseFloat(prod.precio);
       total += precio * prodCarrito.cantidad;
     });
 
-    // 4️⃣ Crear venta
     const venta = await Venta.create({
       nombre_cliente,
       total
     }, { transaction });
 
-    // 5️⃣ Asociar productos con cantidad y precio unitario
     for (let prod of productosBD) {
       const prodCarrito = productos.find(p => p.id === prod.id);
 
@@ -65,7 +58,6 @@ const crearVenta = async (req, res) => {
 
     await transaction.commit();
 
-    // 6️⃣ Devolver venta con productos incluidos
     const ventaCompleta = await Venta.findByPk(venta.id, {
       include: Producto
     });
