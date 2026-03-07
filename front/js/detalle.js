@@ -3,7 +3,7 @@ const id = params.get("id");
 
 console.log("ID recibido:", id);
 
-fetch(`http://localhost:3000/api/productos/${id}`)
+fetch(`/api/productos/${id}`)
 .then(res => {
     if (!res.ok) {
         throw new Error("No se pudo obtener el producto");
@@ -24,7 +24,7 @@ fetch(`http://localhost:3000/api/productos/${id}`)
     const precioNumero = Number(producto.precio);
 
     contenedor.innerHTML = `
-        <img src="http://localhost:3000/uploads/${producto.imagen}" width="200">
+        <img src="/uploads/${producto.imagen}" width="200">
         <h2>${producto.nombre}</h2>
         <p><strong>Precio:</strong> $${precioNumero.toLocaleString()}</p>
         <p><strong>Categoría:</strong> ${producto.categoria}</p>

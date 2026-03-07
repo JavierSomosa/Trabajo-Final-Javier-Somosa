@@ -32,7 +32,7 @@
 <div id="productos" class="grid"></div>
 
 <script>
-const API_URL = "http://localhost:3000/api";
+const API_URL = "/api";
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 async function obtenerProductos(categoria = "") {
@@ -66,7 +66,7 @@ async function obtenerProductos(categoria = "") {
 
             contenedor.innerHTML += `
                 <div class="card">
-                    <img src="http://localhost:3000/uploads/${p.imagen}" 
+                    <img src="/uploads/${p.imagen}" 
                         alt="${p.nombre}" 
                         onerror="this.src='https://via.placeholder.com/150'" />
                     <h3>${p.nombre}</h3>

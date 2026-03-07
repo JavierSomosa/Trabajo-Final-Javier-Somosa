@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const formData = new FormData(form);
 
-      const res = await fetch("http://localhost:3000/api/encuestas", {
+      const res = await fetch("/api/encuestas", {
         method: "POST",
         body: formData
       });

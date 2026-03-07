@@ -7,7 +7,7 @@ if (!nombre) {
 document.getElementById("saludo").innerText =
     `Hola ${nombre}, elegí tus productos`;
 
-fetch("http://localhost:3000/api/productos")
+fetch("/api/productos")
     .then(response => response.json())
     .then(productos => {
 
@@ -21,7 +21,7 @@ fetch("http://localhost:3000/api/productos")
             card.classList.add("card-producto");
 
             card.innerHTML = `
-                <img src="http://localhost:3000/uploads/${producto.imagen}" width="150">
+                <img src="/uploads/${producto.imagen}" width="150">
                 <h3>${producto.nombre}</h3>
                 <p>Precio: $${producto.precio}</p>
                 <button onclick="agregarAlCarrito(${producto.id})">
