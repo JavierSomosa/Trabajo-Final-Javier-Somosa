@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const { sequelize } = require("./src/models");
 const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
-const seedAdmin = require("./src/utils/seedAdmin");
+const seedAdmin = require("./seed-admin");
+
 
 const app = express();
 
@@ -43,10 +45,17 @@ app.use("/api/encuestas", encuestaRoutes);
 
 // Sincronizar BD
 sequelize.sync({ alter: true })
-  .then(() => console.log("BD sincronizada"))
-  .catch(err => console.error(err));
-  await seedAdmin();
+  .then(async () => {
 
-app.listen(3000, () => {
-  console.log("Servidor corriendo en puerto 3000");
-});
+    console.log("BD sincronizada");
+
+    await seedAdmin();
+
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, () => {
+      console.log("Servidor corriendo en puerto " + PORT);
+    });
+
+  })
+  .catch(err => console.error(err));
