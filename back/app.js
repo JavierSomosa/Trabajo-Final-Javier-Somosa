@@ -3,6 +3,7 @@ const { sequelize } = require("./src/models");
 const session = require("express-session");
 const cors = require("cors");
 const path = require("path");
+const seedAdmin = require("./src/utils/seedAdmin");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/encuestas", encuestaRoutes);
 sequelize.sync({ alter: true })
   .then(() => console.log("BD sincronizada"))
   .catch(err => console.error(err));
+  await seedAdmin();
 
 app.listen(3000, () => {
   console.log("Servidor corriendo en puerto 3000");
