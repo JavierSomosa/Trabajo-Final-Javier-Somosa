@@ -1,13 +1,12 @@
 const { Sequelize } = require("sequelize");
 
-//http://localhost:3000/
-
 const sequelize = new Sequelize(
-  "autoservicio_tp",
-  "root",
-  "1234",
+  process.env.MYSQLDATABASE,
+  process.env.MYSQLUSER,
+  process.env.MYSQLPASSWORD,
   {
-    host: "localhost",
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT,
     dialect: "mysql"
   }
 );
