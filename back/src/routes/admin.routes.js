@@ -23,17 +23,17 @@ const { mostrarAsistenciaVista } = require("../controllers/admin.controller");
 
 router.get("/dashboard", verificarSesion, mostrarDashboard);
 
-//es solo para mostrar la pantalla
+// mostrar formulario nuevo producto
 router.get("/productos/nuevo", verificarSesion, (req, res) => {
     res.render("nuevoProducto");
 });
-//para hacer el post si el admin quiere crear un producto
+// crear producto
 router.post("/productos", verificarSesion, upload.single("imagen"), validarProducto, cargarProductoVista);
 
-//para hacer el edit si el admin quiere crear un producto
+// mostrar formulario editar
 router.get("/productos/:id/editar", verificarSesion, mostrarEditarProductoVista);
 
-//para enviar el formulario de edicion
+// guardar edicion
 router.post("/productos/:id/editar", verificarSesion, upload.single("imagen"), validarProducto, actualizarProductosVista);
 
 router.post("/productos/:id/eliminar", verificarSesion, eliminarProductoVista);
@@ -44,7 +44,7 @@ router.get("/registros", verificarSesion, mostrarRegistrosVista);
 
 router.get("/registros/exportar", verificarSesion, exportarRegistros);
 
-router.get("/asistencia", mostrarAsistenciaVista);
+router.get("/asistencia", verificarSesion, mostrarAsistenciaVista);
 
 router.get("/logout", (req, res) =>{
     req.session.destroy((error) => {

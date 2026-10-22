@@ -216,7 +216,6 @@ const mostrarRegistrosVista = async (req, res) => {
             totalFacturacion,
             totalProductosActivos,
 
-            // 🔥 nuevos datos
             encuestas,
             totalEncuestas,
             promedioPuntuacion,
@@ -256,7 +255,6 @@ const exportarRegistros = async (req, res) => {
 
         let csv = "";
 
-        // 🔹 Ventas más caras
         csv += "TOP 10 VENTAS MÁS CARAS\n";
         csv += "ID;Cliente;Total\n";
 
@@ -266,7 +264,6 @@ const exportarRegistros = async (req, res) => {
 
         csv += "\n";
 
-        // 🔹 Productos más vendidos
         csv += "TOP 10 PRODUCTOS MÁS VENDIDOS\n";
         csv += "Producto;Cantidad Vendida\n";
 
@@ -276,7 +273,6 @@ const exportarRegistros = async (req, res) => {
 
         csv += "\n";
 
-        // 🔹 Logs
         csv += "LOGS DE INICIO DE SESIÓN\n";
         csv += "Usuario;Fecha;Acción\n";
 
@@ -284,7 +280,7 @@ const exportarRegistros = async (req, res) => {
         csv += `${l.Usuario.email};${new Date(l.fecha).toLocaleString()};${l.accion}\n`;
         });
 
-        // BOM para Excel
+        // para que excel lea bien los acentos
         csv = "\uFEFF" + csv;
 
         res.header("Content-Type", "text/csv; charset=utf-8");

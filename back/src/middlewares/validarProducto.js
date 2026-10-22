@@ -13,9 +13,10 @@ const validarProducto = (req, res, next) => {
         return res.status(400).json({ error: "Categoría requerida" });
     }
 
-    if (!req.file && activo) {
-    return res.status(400).json({ error: "La imagen es obligatoria" });
-}
+    // si es producto nuevo necesita imagen
+    if (!req.file && !req.params.id) {
+        return res.status(400).json({ error: "La imagen es obligatoria" });
+    }
 
     next();
 };

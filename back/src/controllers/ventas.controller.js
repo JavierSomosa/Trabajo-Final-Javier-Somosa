@@ -74,6 +74,21 @@ const crearVenta = async (req, res) => {
   }
 };
 
+const obtenerVentas = async (req, res) => {
+  try {
+    const ventas = await Venta.findAll({
+      include: Producto,
+      order: [["fecha", "DESC"]]
+    });
+
+    res.json(ventas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al obtener ventas" });
+  }
+};
+
 module.exports = {
-  crearVenta
+  crearVenta,
+  obtenerVentas
 };

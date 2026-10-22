@@ -78,3 +78,25 @@ tbody tr:hover {
     text-decoration: none;
     border-radius: 6px;
 }
+
+/* MODO OSCURO */
+body.dark {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark table {
+    background: #1e293b;
+}
+
+body.dark td {
+    color: #e2e8f0;
+}
+
+body.dark tbody tr {
+    border-bottom: 1px solid #334155;
+}
+
+body.dark tbody tr:hover {
+    background-color: #1a2332;
+}

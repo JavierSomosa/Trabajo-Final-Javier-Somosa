@@ -7,16 +7,24 @@
 body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #e3e3e3, #ffffff);
     transition: 0.4s ease;
+    padding: 20px;
 }
 
-/* CONTENEDOR */
+.encuesta-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.alumno {
+    font-size: 12px;
+    color: #888;
+}
+
 .contenedor {
-    width: 420px;
+    max-width: 450px;
+    margin: 0 auto;
     background: white;
     padding: 30px;
     border-radius: 12px;
@@ -28,7 +36,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* FORM */
 form {
     display: flex;
     flex-direction: column;
@@ -57,7 +64,6 @@ input[type="range"] {
     width: 100%;
 }
 
-/* BOTONES */
 .acciones {
     display: flex;
     justify-content: space-between;
@@ -74,19 +80,19 @@ input[type="range"] {
 }
 
 .btn-omitir {
-    background: #dc3545;
-    color: white;
-    border: none;
+    background: transparent;
+    color: #888;
+    border: 1px solid #ccc;
     padding: 8px 14px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 13px;
 }
 
 button:hover {
     opacity: 0.9;
 }
 
-/* MODAL */
 .modal {
     display: none;
     position: fixed;
@@ -113,7 +119,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* BOTON TEMA */
 .theme-btn {
     position: absolute;
     top: 20px;
@@ -126,7 +131,7 @@ button:hover {
     cursor: pointer;
 }
 
-/* DARK MODE */
+/* modo oscuro */
 body.dark {
     background: linear-gradient(135deg, #1f1f1f, #121212);
     color: white;

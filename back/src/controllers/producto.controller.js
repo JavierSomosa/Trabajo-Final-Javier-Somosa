@@ -4,7 +4,6 @@ const crearProducto = async (req, res) => {
     try {
         const {nombre, precio, categoria, imagen, activo} = req.body;
 
-        // Validación básica
         if (!nombre || !precio || !categoria) {
         return res.status(400).json({ mensaje: "Datos incompletos" });
         }
@@ -14,7 +13,7 @@ const crearProducto = async (req, res) => {
         precio,
         categoria,
         imagen: imagen || null,
-        activo: activo !== undefined ? activo : true // Por defecto, el producto es activo
+        activo: activo !== undefined ? activo : true
         });
         res.status(201).json({
         mensaje: "Producto creado correctamente",
@@ -30,7 +29,7 @@ const crearProducto = async (req, res) => {
 const obtenerProductos = async (req, res) => {
   try {
 
-    const { categoria } = req.query;
+    const { categoria, page, limit } = req.query;
 
     const where = { activo: true };
 
@@ -38,8 +37,27 @@ const obtenerProductos = async (req, res) => {
       where.categoria = categoria;
     }
 
-    const productos = await Producto.findAll({ where });
+    // paginacion
+    if (page && limit) {
+      const pagina = parseInt(page) || 1;
+      const porPagina = parseInt(limit) || 6;
+      const offset = (pagina - 1) * porPagina;
 
+      const { count, rows } = await Producto.findAndCountAll({
+        where,
+        limit: porPagina,
+        offset
+      });
+
+      return res.json({
+        productos: rows,
+        total: count,
+        pagina: pagina,
+        totalPaginas: Math.ceil(count / porPagina)
+      });
+    }
+
+    const productos = await Producto.findAll({ where });
     res.json(productos);
 
   } catch (error) {

@@ -108,3 +108,60 @@ tr:hover {
     background-color: #e2e8f0;
     color: #1e293b;
 }
+
+/* MODO OSCURO */
+body.dark {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark .card,
+body.dark .stat-card {
+    background: #1e293b;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+body.dark .stat-card h4 {
+    color: #94a3b8;
+}
+
+body.dark td {
+    color: #e2e8f0;
+    border-bottom: 1px solid #334155;
+}
+
+body.dark tr:hover {
+    background-color: #1a2332;
+}
+
+body.dark input {
+    background: #334155;
+    border: 1px solid #475569;
+    color: #e2e8f0;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+body.dark .secondary {
+    background-color: #334155;
+    color: #e2e8f0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .filter-form {
+        flex-direction: column;
+    }
+    table {
+        font-size: 13px;
+    }
+    td, th {
+        padding: 6px;
+    }
+}

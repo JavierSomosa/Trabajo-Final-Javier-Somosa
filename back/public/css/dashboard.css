@@ -98,3 +98,82 @@ img {
 .acciones form {
     display: inline;
 }
+
+/* MODO OSCURO */
+body.dark {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark table {
+    background: #1e293b;
+}
+
+body.dark td {
+    color: #e2e8f0;
+    border-bottom: 1px solid #334155;
+}
+
+body.dark tr:nth-child(even) {
+    background-color: #1a2332;
+}
+
+body.dark .btn {
+    background-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark .btn.primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+body.dark .btn.success {
+    background-color: #16a34a;
+    color: white;
+}
+
+body.dark .btn.danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+body.dark #modalConfirmar > div {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .topbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 15px;
+    }
+    .topbar nav a {
+        margin: 0 6px;
+        font-size: 13px;
+    }
+    .actions {
+        padding: 15px;
+        text-align: center;
+    }
+    .actions .btn {
+        display: block;
+        margin-bottom: 8px;
+    }
+    .tabla-container {
+        padding: 10px;
+        overflow-x: auto;
+    }
+    table {
+        font-size: 13px;
+    }
+    td, th {
+        padding: 6px;
+    }
+    img {
+        width: 50px;
+    }
+}

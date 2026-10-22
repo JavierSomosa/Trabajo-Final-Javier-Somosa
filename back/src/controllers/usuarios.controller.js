@@ -5,7 +5,7 @@ const crearUsuario = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-                //es para mezclar la contraseña
+    // hasheo la contraseña
     const hash = await bcrypt.hash(password, 10);
 
     const usuario = await Usuario.create({

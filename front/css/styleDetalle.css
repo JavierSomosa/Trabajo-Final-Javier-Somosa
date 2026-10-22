@@ -7,20 +7,40 @@
 body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #e3e3e3, #ffffff);
     transition: 0.4s ease;
+    padding: 20px;
 }
 
-/* CONTENEDOR */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.alumno {
+    font-size: 12px;
+    color: #888;
+}
+
+nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #6c63ff;
+}
+
 .contenedor {
-    width: 400px;
+    max-width: 450px;
+    margin: 0 auto;
     text-align: center;
 }
 
-/* CARD */
 .card-detalle {
     background: white;
     padding: 20px;
@@ -45,7 +65,6 @@ body {
     margin-bottom: 8px;
 }
 
-/* VOLVER */
 .volver {
     display: inline-block;
     margin-top: 20px;
@@ -58,7 +77,6 @@ body {
     text-decoration: underline;
 }
 
-/* BOTON TEMA */
 .theme-btn {
     position: absolute;
     top: 20px;
@@ -71,7 +89,7 @@ body {
     cursor: pointer;
 }
 
-/* ================= DARK MODE ================= */
+/* MODO OSCURO */
 
 body.dark {
     background: linear-gradient(135deg, #1f1f1f, #121212);
@@ -85,4 +103,21 @@ body.dark .card-detalle {
 
 body.dark .volver {
     color: #9a8cff;
+}
+
+body.dark nav a {
+    color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    nav a {
+        margin: 0 8px;
+        font-size: 14px;
+    }
 }

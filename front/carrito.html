@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zona Gamer - Carrito</title>
 
@@ -12,8 +13,20 @@
 
 <button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
+<header>
+    <div>
+        <h1>🎮 Zona Gamer</h1>
+        <span class="alumno">Javier Somosa</span>
+    </div>
+    <nav>
+        <a href="productos.html">Productos</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="index.html">Salir</a>
+    </nav>
+</header>
+
 <div class="contenedor">
-    <h1>🛒 Carrito</h1>
+    <h2>🛒 Carrito</h2>
 
     <div id="carrito" class="lista-carrito"></div>
 
@@ -22,6 +35,23 @@
     <div class="acciones">
         <button class="btn-finalizar" onclick="finalizar()">Finalizar compra</button>
         <a href="productos.html" class="volver">← Volver</a>
+    </div>
+</div>
+
+<!-- modal confirmar compra -->
+<div id="modalConfirmar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center;">
+    <div style="background:white;padding:25px;border-radius:12px;text-align:center;max-width:320px;margin:auto;margin-top:25vh;">
+        <p id="modalTexto" style="margin-bottom:15px;font-size:16px;"></p>
+        <button id="modalSi" style="padding:8px 16px;background:#28a745;color:white;border:none;border-radius:8px;cursor:pointer;margin-right:10px;">Sí</button>
+        <button id="modalNo" style="padding:8px 16px;background:#ddd;color:#333;border:none;border-radius:8px;cursor:pointer;">Cancelar</button>
+    </div>
+</div>
+
+<!-- modal aviso -->
+<div id="modalAviso" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center;">
+    <div style="background:white;padding:25px;border-radius:12px;text-align:center;max-width:300px;margin:auto;margin-top:25vh;">
+        <p id="modalAvisoTexto" style="margin-bottom:15px;font-size:16px;"></p>
+        <button onclick="document.getElementById('modalAviso').style.display='none'" style="padding:8px 16px;background:#6c63ff;color:white;border:none;border-radius:8px;cursor:pointer;">Aceptar</button>
     </div>
 </div>
 
@@ -68,21 +98,34 @@ function guardar() {
     render();
 }
 
-async function finalizar() {
+function mostrarAviso(texto) {
+    document.getElementById("modalAvisoTexto").textContent = texto;
+    document.getElementById("modalAviso").style.display = "flex";
+}
+
+function finalizar() {
     if (carrito.length === 0) {
-        alert("El carrito está vacío");
+        mostrarAviso("El carrito está vacío");
         return;
     }
+    document.getElementById("modalTexto").textContent = "¿Confirmar compra?";
+    document.getElementById("modalConfirmar").style.display = "flex";
+}
 
-    if (!confirm("¿Confirmar compra?")) return;
+document.getElementById("modalNo").addEventListener("click", function() {
+    document.getElementById("modalConfirmar").style.display = "none";
+});
+
+document.getElementById("modalSi").addEventListener("click", async function() {
+    document.getElementById("modalConfirmar").style.display = "none";
 
     const nombre = localStorage.getItem("nombreUsuario");
 
     const res = await fetch("/api/ventas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            nombre_cliente: nombre, 
+        body: JSON.stringify({
+            nombre_cliente: nombre,
             productos: carrito.map(p => ({
                 id: p.id,
                 cantidad: p.cantidad
@@ -91,7 +134,7 @@ async function finalizar() {
     });
 
     if (!res.ok) {
-        alert("Error al crear la venta");
+        mostrarAviso("Error al crear la venta");
         return;
     }
 
@@ -100,7 +143,7 @@ async function finalizar() {
     localStorage.removeItem("carrito");
     localStorage.setItem("ticket", JSON.stringify(data.venta));
     window.location.href = "ticket.html";
-}
+});
 
 function toggleTheme() {
     document.body.classList.toggle("dark");

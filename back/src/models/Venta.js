@@ -13,7 +13,6 @@ const Venta = sequelize.define("Venta", {
     defaultValue: DataTypes.NOW
   },
 
-  // Total de la venta
   total: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false

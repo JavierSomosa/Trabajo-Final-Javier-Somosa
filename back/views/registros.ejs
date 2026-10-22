@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registros y Estadísticas</title>
     <link rel="stylesheet" href="/css/registros.css">
+    <link rel="stylesheet" href="/css/adminTheme.css">
 </head>
 <body>
+
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
 <div class="container">
 
     <h2>Registros y Estadísticas</h2>
 
-    <!-- FILTRO -->
+    <!-- filtro fecha -->
     <div class="card">
         <h3>Filtrar por fecha</h3>
         <form method="GET" action="/admin/registros" class="filter-form">
@@ -28,7 +34,7 @@
         </form>
     </div>
 
-    <!-- ESTADÍSTICAS -->
+    <!-- stats -->
     <div class="stats-grid">
         <div class="stat-card">
             <h4>Total Facturación</h4>
@@ -51,7 +57,7 @@
         </div>
     </div>
 
-    <!-- TOP VENTAS -->
+    <!-- ventas -->
     <div class="card">
         <h3>Top 10 Ventas Más Caras</h3>
         <table>
@@ -70,7 +76,7 @@
         </table>
     </div>
 
-    <!-- TOP PRODUCTOS -->
+    <!-- productos -->
     <div class="card">
         <h3>Top 10 Productos Más Vendidos</h3>
         <table>
@@ -87,7 +93,7 @@
         </table>
     </div>
 
-    <!-- LOGS -->
+    <!-- logs -->
     <div class="card">
         <h3>Últimos Inicios de Sesión</h3>
         <table>
@@ -106,7 +112,7 @@
         </table>
     </div>
 
-    <!-- ENCUESTAS -->
+    <!-- encuestas -->
     <div class="card">
         <h3>Encuestas / Asistencias</h3>
         <table>
@@ -129,13 +135,23 @@
         </table>
     </div>
 
-    <!-- BOTONES -->
+    <!-- botones -->
     <div class="buttons">
         <a href="/admin/registros/exportar" class="btn success">Descargar Excel</a>
         <a href="/admin/dashboard" class="btn secondary">Volver al Dashboard</a>
     </div>
 
 </div>
+
+<script>
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("adminTema", document.body.classList.contains("dark") ? "dark" : "light");
+}
+if (localStorage.getItem("adminTema") === "dark") {
+    document.body.classList.add("dark");
+}
+</script>
 
 </body>
 </html>

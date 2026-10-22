@@ -7,15 +7,37 @@
 body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #e3e3e3, #ffffff);
     transition: 0.4s ease;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.alumno {
+    font-size: 12px;
+    color: #888;
+}
+
+nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #6c63ff;
 }
 
 .contenedor {
-    width: 450px;
+    max-width: 500px;
+    margin: 0 auto;
     background: white;
     padding: 30px;
     border-radius: 12px;
@@ -109,4 +131,39 @@ body.dark .item {
 
 body.dark .volver {
     color: #9a8cff;
+}
+
+body.dark nav a {
+    color: white;
+}
+
+body.dark #modalConfirmar > div,
+body.dark #modalAviso > div {
+    background: #1e1e1e;
+    color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    nav a {
+        margin: 0 8px;
+        font-size: 14px;
+    }
+    .contenedor {
+        padding: 20px 15px;
+    }
+    .item {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    .acciones {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

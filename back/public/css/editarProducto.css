@@ -74,3 +74,42 @@ input:focus, select:focus {
     background-color: #e2e8f0;
     color: #1e293b;
 }
+
+/* MODO OSCURO */
+body.dark {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark .form-card {
+    background: #1e293b;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+body.dark .form-group label {
+    color: #cbd5e1;
+}
+
+body.dark input,
+body.dark select {
+    background: #334155;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+body.dark .btn.secondary {
+    background-color: #334155;
+    color: #e2e8f0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+        height: auto;
+        min-height: 100vh;
+    }
+    .container {
+        width: 100%;
+    }
+}

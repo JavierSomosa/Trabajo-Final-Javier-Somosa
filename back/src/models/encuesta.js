@@ -36,7 +36,7 @@ const Encuesta = sequelize.define("Encuesta", {
   }
 
 }, {
-  timestamps: true // guarda createdAt automáticamente
+  timestamps: true
 });
 
 module.exports = Encuesta;

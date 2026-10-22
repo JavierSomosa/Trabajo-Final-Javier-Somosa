@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zona Gamer - Productos</title>
 
@@ -13,10 +14,14 @@
 <button class="theme-btn" onclick="toggleTheme()">🌙</button>
 
 <header>
-    <h1>🎮 Zona Gamer</h1>
+    <div>
+        <h1>🎮 Zona Gamer</h1>
+        <span class="alumno">Javier Somosa</span>
+    </div>
     <nav>
         <a href="productos.html">Productos</a>
         <a href="carrito.html">Carrito</a>
+        <a href="/admin/login">Admin</a>
         <a href="index.html">Salir</a>
     </nav>
 </header>
@@ -31,17 +36,32 @@
 
 <div id="productos" class="grid"></div>
 
+<div id="paginacion" class="paginacion"></div>
+
+<!-- modal carrito -->
+<div id="modalAgregado" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center;">
+    <div style="background:white;padding:25px;border-radius:12px;text-align:center;max-width:300px;margin:auto;margin-top:25vh;">
+        <p style="margin-bottom:15px;font-size:16px;">Producto agregado al carrito</p>
+        <button onclick="cerrarModal()" style="padding:8px 16px;background:#6c63ff;color:white;border:none;border-radius:8px;cursor:pointer;">Aceptar</button>
+    </div>
+</div>
+
 <script>
 const API_URL = "/api";
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let paginaActual = 1;
+const PRODUCTOS_POR_PAGINA = 6;
+let filtroActual = "";
 
-async function obtenerProductos(categoria = "") {
+async function obtenerProductos(categoria = "", page = 1) {
     try {
+        filtroActual = categoria;
+        paginaActual = page;
 
-        let url = `${API_URL}/productos`;
+        let url = `${API_URL}/productos?page=${page}&limit=${PRODUCTOS_POR_PAGINA}`;
 
         if (categoria) {
-            url += `?categoria=${categoria}`;
+            url += `&categoria=${categoria}`;
         }
 
         const res = await fetch(url);
@@ -50,13 +70,17 @@ async function obtenerProductos(categoria = "") {
             throw new Error("No se pudieron obtener los productos");
         }
 
-        const productos = await res.json();
+        const data = await res.json();
+
+        const productos = data.productos || data;
+        const totalPaginas = data.totalPaginas || 1;
 
         const contenedor = document.getElementById("productos");
         contenedor.innerHTML = "";
 
         if (!Array.isArray(productos) || productos.length === 0) {
             contenedor.innerHTML = "<p>No hay productos disponibles.</p>";
+            document.getElementById("paginacion").innerHTML = "";
             return;
         }
 
@@ -64,17 +88,20 @@ async function obtenerProductos(categoria = "") {
 
             const precioNumero = Number(p.precio);
 
+            const nombreSafe = p.nombre.replace(/"/g, '&quot;');
+
             contenedor.innerHTML += `
                 <div class="card">
-                    <img src="/uploads/${p.imagen}" 
-                        alt="${p.nombre}" 
-                        onerror="this.src='https://via.placeholder.com/150'" />
+                    <img src="/uploads/${p.imagen}"
+                        alt="${nombreSafe}"
+                        onerror="this.style.display='none'" />
                     <h3>${p.nombre}</h3>
                     <p class="precio">$${precioNumero.toLocaleString()}</p>
                     <div class="acciones">
-                        <button onclick="agregar(${p.id}, '${p.nombre}', ${precioNumero})">
+                        <button onclick="agregar(${p.id}, &quot;${nombreSafe}&quot;, ${precioNumero})">
                             Agregar
                         </button>
+                        ${carrito.find(c => c.id === p.id) ? `<button class="btn-quitar" onclick="quitar(${p.id})">Quitar</button>` : ''}
                         <button onclick="verDetalle(${p.id})">
                             Ver detalle
                         </button>
@@ -82,6 +109,14 @@ async function obtenerProductos(categoria = "") {
                 </div>
             `;
         });
+
+        // botones de pagina
+        let paginacionHTML = "";
+        for (let i = 1; i <= totalPaginas; i++) {
+            paginacionHTML += `<button class="${i === paginaActual ? 'activa' : ''}"
+                onclick="obtenerProductos('${filtroActual}', ${i})">${i}</button>`;
+        }
+        document.getElementById("paginacion").innerHTML = paginacionHTML;
 
     } catch (error) {
         console.error("Error cargando productos:", error);
@@ -98,7 +133,17 @@ function agregar(id, nombre, precio) {
         carrito.push({ id, nombre, precio, cantidad: 1 });
     }
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert("Producto agregado");
+    document.getElementById("modalAgregado").style.display = "flex";
+}
+
+function cerrarModal() {
+    document.getElementById("modalAgregado").style.display = "none";
+}
+
+function quitar(id) {
+    carrito = carrito.filter(p => p.id !== id);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    obtenerProductos(filtroActual, paginaActual);
 }
 
 function filtrar(categoria) {
@@ -117,6 +162,10 @@ function toggleTheme() {
 }
 
 window.onload = function () {
+    if (!localStorage.getItem("nombreUsuario")) {
+        window.location.href = "index.html";
+        return;
+    }
     if (localStorage.getItem("tema") === "dark") {
         document.body.classList.add("dark");
     }

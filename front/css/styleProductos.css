@@ -18,6 +18,11 @@ header {
     margin-bottom: 20px;
 }
 
+.alumno {
+    font-size: 12px;
+    color: #888;
+}
+
 nav a {
     margin-left: 15px;
     text-decoration: none;
@@ -97,6 +102,14 @@ img {
     background-color: #222;
 }
 
+.acciones .btn-quitar {
+    background-color: #dc3545;
+}
+
+.acciones .btn-quitar:hover {
+    background-color: #a71d2a;
+}
+
 .theme-btn {
     position: absolute;
     top: 80px;
@@ -129,4 +142,62 @@ body.dark .acciones button {
 
 body.dark .acciones button:hover {
     background: #555;
+}
+
+/* PAGINACIÓN */
+.paginacion {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paginacion button {
+    margin: 0 5px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #ddd;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.paginacion button.activa {
+    background: #6c63ff;
+    color: white;
+}
+
+body.dark .paginacion button {
+    background: #333;
+    color: white;
+}
+
+body.dark .paginacion button.activa {
+    background: #6c63ff;
+}
+
+body.dark #modalAgregado > div {
+    background: #1e1e1e;
+    color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    nav a {
+        margin: 0 8px;
+        font-size: 14px;
+    }
+    .filtros button {
+        margin-bottom: 5px;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .theme-btn {
+        top: 10px;
+        right: 10px;
+    }
 }
